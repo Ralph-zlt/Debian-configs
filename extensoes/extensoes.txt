@@ -1,0 +1,11 @@
+dash-to-panel@jderose9.github.com
+arcmenu@arcmenu.com
+monitor@astraext.github.io
+lockkeys@vaina.lt
+tilingshell@ferrarodomenico.com
+gsconnect@andyholmes.github.io
+clipboard-indicator@tudmotu.com
+user-theme@gnome-shell-extensions.gcampax.github.com
+gnome-fuzzy-app-search@gnome-shell-extensions.Czarlie.gitlab.com
+quick-settings-tweaks@qwreey
+rounded-window-corners@fxgn

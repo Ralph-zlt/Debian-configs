@@ -1,0 +1,4 @@
+com.mattjakeman.ExtensionManager
+com.usebottles.bottles
+io.github.realmazharhussain.GdmSettings
+io.missioncenter.MissionCenter

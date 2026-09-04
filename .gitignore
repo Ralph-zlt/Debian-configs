@@ -1,0 +1,34 @@
+# Ignorar binários grandes e pacotes .deb de terceiros
+pacotes/*.deb
+!pacotes/nautilus-extension-any-terminal_*.deb
+!pacotes/gnome-shell-extension-manager_*.deb
+!pacotes/stacer.deb
+
+# Ignorar arquivos de sistema e cache
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Ignorar configs sensíveis que devem ser geradas localmente
+configs/gsconnect/
+configs/kdeconnect/
+configs/BraveSoftware/
+configs/chromium/
+configs/google-chrome*/
+configs/microsoft-edge*/
+configs/evolution/
+configs/goa-1.0/
+configs/pulse/
+configs/dconf/
+
+# Ignorar extensões que contêm chaves/certificados
+local/share/gnome-shell/extensions/gsconnect@*/
+local/share/gnome-shell/extensions/kdeconnect@*/
+
+# Ignorar wallpapers pessoais
+Imagens/
+
+# Ignorar diretório .git (não versionar o próprio git)
+.git/

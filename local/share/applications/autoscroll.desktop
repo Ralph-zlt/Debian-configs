@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=AutoScroll
+Exec=$HOME/linux-autoscroll/autoscroll_no_icon.py
+Icon=input-mouse
+Terminal=false
+Categories=Utility;
