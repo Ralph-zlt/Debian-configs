@@ -23,31 +23,6 @@ echo " Aplicando Configurações do Sistema"
 echo "======================================="
 
 BASE="$(cd "$(dirname "$0")" && pwd)"
-
-########################################
-# Configuração da Swap (8 GiB)
-########################################
-echo
-echo " Verificando memória swap..."
-if [ ! -f /swapfile ]; then
-    echo "Criando swapfile de 8 GiB..."
-    sudo fallocate -l 8G /swapfile
-    sudo chmod 600 /swapfile
-    sudo mkswap /swapfile
-fi
-
-if ! grep -q '^/swapfile ' /proc/swaps; then
-    echo "Ativando swap..."
-    sudo swapon /swapfile || true
-fi
-
-if ! grep -q '^/swapfile none swap defaults 0 0$' /etc/fstab; then
-    echo "Registrando swap no /etc/fstab..."
-    echo "/swapfile none swap defaults 0 0" | sudo tee -a /etc/fstab > /dev/null
-fi
-echo "Swap configurada com sucesso."
-
-########################################
 # Configurações de Usuário (.config)
 ########################################
 if [ -d "$BASE/configs" ]; then

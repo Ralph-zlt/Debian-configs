@@ -13,7 +13,7 @@
 
 > **Configuração completa e reproduzível do Debian 13 (Trixie) com GNOME** — pensada para produtividade, mercado de trabalho e portfólio técnico.
 
-Um conjunto de scripts, dotfiles e automações que transformam uma instalação limpa do Debian em um ambiente de desenvolvimento/station pronto para uso em **minutos**, não horas.
+Um conjunto de scripts, dotfiles e automações que transformam uma instalação limpa do Debian em um ambiente de desenvolvimento pronto para uso em **minutos**, não horas.
 
 ---
 
@@ -38,13 +38,17 @@ cd Debian-configs
 bash flatpak.sh      # 1º - Instala Flatpak + configura Flathub
 # → Faça logout/login (ou reinicie) para o Flatpak funcionar 100%
 
-bash instalar.sh     # 2º - Apps Flatpak + 309 pkgs APT + 3 .deb + extensões GNOME + ~/.local
+bash instalar.sh     # 2º - Apps Flatpak + 41 pkgs APT + 1 .deb + extensões GNOME + ~/.local
 # → Faça logout/login para extensões carregarem
 
-bash configs.sh      # 3º - Swap 8GB, dconf, Fish/Kitty, XMousePasteBlock, GTK middle-click block
+bash configs.sh      # 3º - dconf, Fish, XMousePasteBlock, GTK middle-click block
 # → Reinicie o computador
 
-# 3. Pronto! Ambiente configurado.
+# 4. (Opcional) Autoscroll estilo Windows
+bash scripts/install-autoscroll.sh
+# → Faça logout e entre em "GNOME on Xorg" (Wayland não suporta)
+
+# 5. Pronto! Ambiente configurado.
 ```
 
 **O que cada script faz:**
@@ -52,8 +56,9 @@ bash configs.sh      # 3º - Swap 8GB, dconf, Fish/Kitty, XMousePasteBlock, GTK 
 | Script | Responsabilidade | Reinício necessário? |
 |--------|------------------|---------------------|
 | `flatpak.sh` | Instala `flatpak`, `gnome-software-plugin-flatpak`, adiciona Flathub, `flatpak update` | **Sim** (logout/login) |
-| `instalar.sh` | Apps Flatpak (4), 309 pacotes APT, 3 `.deb`, 10 extensões GNOME, restaura `~/.local` | **Sim** (logout/login p/ extensões) |
-| `configs.sh` | Swap 8GB, dconf (GNOME), Fish/Kitty defaults, XMousePasteBlock, GTK middle-click block | **Sim** (reinício completo) |
+| `instalar.sh` | Apps Flatpak (3), 41 pacotes APT, 1 `.deb`, 11 extensões GNOME, restaura `~/.local` | **Sim** (logout/login p/ extensões) |
+| `configs.sh` | dconf (GNOME), Fish como shell padrão, XMousePasteBlock, GTK middle-click block | **Sim** (reinício completo) |
+| `scripts/install-autoscroll.sh` | Autoscroll estilo Windows (ícone, Xorg apenas) | **Sim** (logout + sessão Xorg) |
 
 > ⚠️ **Importante**: A ordem é obrigatória. `flatpak.sh` prepara a infraestrutura que `instalar.sh` usa. `configs.sh` aplica configs que dependem dos pacotes instalados.
 
@@ -63,14 +68,14 @@ bash configs.sh      # 3º - Swap 8GB, dconf, Fish/Kitty, XMousePasteBlock, GTK 
 
 | Categoria | Detalhes |
 |-----------|----------|
-| **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh` — idempotentes, seguros, com `set -e` |
-| **APT (309 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, docker), GNOME apps, firmware, fish, kitty, neofetch, stacer, etc. |
-| **Flatpak (4)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings, MissionCenter |
-| **`.deb` (3)** | Extension Manager, Nautilus Open Any Terminal, Stacer |
-| **Extensões GNOME (10)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, blur-my-shell, quick-settings-tweaks, gnome-fuzzy-app-search |
-| **dconf** | `gnome/dconf.ini` — keybindings (Super+T=kitty, Super+G=navegador), tema Yaru-purple-dark, middle-click paste desabilitado, appfolders, notificações |
-| **Dotfiles** | `configs/fish/` (welcome + neofetch), `configs/kitty/` (splits Ctrl+Shift+D/Enter), `configs/neofetch/`, `configs/stacer/` |
-| **Autoscroll (opcional)** | `.desktop` em `configs/autostart/` e `local/share/applications/` — apontam para `$HOME/linux-autoscroll/` (script Python **não incluso**, cada usuário adiciona o seu) |
+| **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh`, `scripts/install-autoscroll.sh` — idempotentes, seguros, com `set -e` |
+| **APT (41 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, docker), firmware, fish, neofetch, gnome-tweaks, dconf-editor, gparted, synaptic, temas Yaru, codecs, drivers |
+| **Flatpak (3)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings |
+| **`.deb` (1)** | Nautilus Open Any Terminal (integração "Abrir terminal aqui") |
+| **Extensões GNOME (11)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, blur-my-shell, quick-settings-tweaks, gnome-fuzzy-app-search, rounded-window-corners |
+| **dconf** | `gnome/dconf.ini` — keybindings (Super+T=terminal, Super+G=navegador), tema Yaru-dark, middle-click paste desabilitado, appfolders, notificações |
+| **Dotfiles** | `configs/fish/` (welcome + neofetch), `configs/neofetch/` |
+| **Autoscroll** | `scripts/install-autoscroll.sh` — instala versão com ícone (PyQt5), autostart configurado. **Requer sessão "GNOME on Xorg"** |
 
 ---
 
@@ -105,7 +110,7 @@ dconf dump / > gnome/dconf.ini
 
 ## 🔒 Segurança
 
-- **Zero segredos** no repositório: chaves privadas, certificados KDE Connect/GSConnect, cookies, histórico de navegador, IPs LAN, usernames — **removidos**
+- **Zero segredos** no repositório: chaves privadas, certificados, cookies, histórico de navegador, IPs locais, usuários — **removidos**
 - Paths usam `$HOME` — funciona para qualquer usuário
 - `.gitignore` protege contra vazamentos futuros
 - Licença **GPL v3** — melhorias voltam para a comunidade

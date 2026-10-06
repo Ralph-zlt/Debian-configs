@@ -38,13 +38,17 @@ cd Debian-configs
 bash flatpak.sh      # 1st - Installs Flatpak + configures Flathub
 # → Logout/login (or reboot) for Flatpak to work fully
 
-bash instalar.sh     # 2nd - Flatpak apps + 309 APT pkgs + 3 .deb + GNOME extensions + ~/.local
+bash instalar.sh     # 2nd - Flatpak apps + 41 APT pkgs + 1 .deb + GNOME extensions + ~/.local
 # → Logout/login for extensions to load
 
-bash configs.sh      # 3rd - 8GB swap, dconf, Fish/Kitty, XMousePasteBlock, GTK middle-click block
+bash configs.sh      # 3rd - dconf, Fish, XMousePasteBlock, GTK middle-click block
 # → Full reboot
 
-# 3. Done! Environment ready.
+# 4. (Optional) Windows-style autoscroll
+bash scripts/install-autoscroll.sh
+# → Logout and log into "GNOME on Xorg" (Wayland not supported)
+
+# 5. Done! Environment ready.
 ```
 
 **What each script does:**
@@ -52,8 +56,9 @@ bash configs.sh      # 3rd - 8GB swap, dconf, Fish/Kitty, XMousePasteBlock, GTK 
 | Script | Responsibility | Restart needed? |
 |--------|----------------|-----------------|
 | `flatpak.sh` | Installs `flatpak`, `gnome-software-plugin-flatpak`, adds Flathub, `flatpak update` | **Yes** (logout/login) |
-| `instalar.sh` | Flatpak apps (4), 309 APT packages, 3 `.deb`, 10 GNOME extensions, restores `~/.local` | **Yes** (logout/login for extensions) |
-| `configs.sh` | 8GB swap, dconf (GNOME), Fish/Kitty defaults, XMousePasteBlock, GTK middle-click block | **Yes** (full reboot) |
+| `instalar.sh` | Flatpak apps (3), 41 APT packages, 1 `.deb`, 11 GNOME extensions, restores `~/.local` | **Yes** (logout/login for extensions) |
+| `configs.sh` | dconf (GNOME), Fish as default shell, XMousePasteBlock, GTK middle-click block | **Yes** (full reboot) |
+| `scripts/install-autoscroll.sh` | Windows-style autoscroll (icon, Xorg only) | **Yes** (logout + Xorg session) |
 
 > ⚠️ **Important**: Order is mandatory. `flatpak.sh` sets up infrastructure used by `instalar.sh`. `configs.sh` applies configs depending on installed packages.
 
@@ -63,14 +68,14 @@ bash configs.sh      # 3rd - 8GB swap, dconf, Fish/Kitty, XMousePasteBlock, GTK 
 
 | Category | Details |
 |----------|---------|
-| **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh` — idempotent, safe, `set -e` |
-| **APT (309 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, docker), GNOME apps, firmware, fish, kitty, neofetch, stacer, etc. |
-| **Flatpak (4)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings, MissionCenter |
-| **`.deb` (3)** | Extension Manager, Nautilus Open Any Terminal, Stacer |
-| **GNOME Extensions (10)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, blur-my-shell, quick-settings-tweaks, gnome-fuzzy-app-search |
-| **dconf** | `gnome/dconf.ini` — keybindings (Super+T=kitty, Super+G=browser), Yaru-purple-dark theme, middle-click paste disabled, appfolders, notifications |
-| **Dotfiles** | `configs/fish/` (welcome + neofetch), `configs/kitty/` (splits Ctrl+Shift+D/Enter), `configs/neofetch/`, `configs/stacer/` |
-| **Autoscroll (optional)** | `.desktop` in `configs/autostart/` and `local/share/applications/` — point to `$HOME/linux-autoscroll/` (Python script **not included**, each user adds their own) |
+| **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh`, `scripts/install-autoscroll.sh` — idempotent, safe, `set -e` |
+| **APT (41 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, docker), firmware, fish, neofetch, gnome-tweaks, dconf-editor, gparted, synaptic, Yaru themes, codecs, drivers |
+| **Flatpak (3)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings |
+| **`.deb` (1)** | Nautilus Open Any Terminal (integration "Open terminal here") |
+| **GNOME Extensions (11)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, blur-my-shell, quick-settings-tweaks, gnome-fuzzy-app-search, rounded-window-corners |
+| **dconf** | `gnome/dconf.ini` — keybindings (Super+T=terminal, Super+G=browser), Yaru-dark theme, middle-click paste disabled, appfolders, notifications |
+| **Dotfiles** | `configs/fish/` (welcome + neofetch), `configs/neofetch/` |
+| **Autoscroll** | `scripts/install-autoscroll.sh` — installs icon version (PyQt5), autostart configured. **Requires "GNOME on Xorg" session** |
 
 ---
 
@@ -105,7 +110,7 @@ dconf dump / > gnome/dconf.ini
 
 ## 🔒 Security
 
-- **Zero secrets** in repository: private keys, KDE Connect/GSConnect certificates, cookies, browser history, LAN IPs, usernames — **removed**
+- **Zero secrets** in repository: private keys, certificates, cookies, browser history, LAN IPs, usernames — **removed**
 - Paths use `$HOME` — works for any user
 - `.gitignore` protects against future leaks
 - **GPL v3** license — improvements give back to community
