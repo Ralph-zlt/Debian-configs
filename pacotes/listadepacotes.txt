@@ -23,7 +23,6 @@ flatpak           # sandbox apps
 dconf-editor      # editor config GNOME baixo nível
 gparted           # particionador (precisa root)
 synaptic          # gerenciador pacotes GUI (precisa root)
-nautilus-python   # extensões Python no Nautilus
 python3-nautilus  # bindings Nautilus
 zenity            # diálogos GTK (extensão "Novo Documento")
 yaru-theme-gnome-shell  # tema shell Yaru
