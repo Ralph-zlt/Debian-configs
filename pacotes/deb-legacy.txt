@@ -1,0 +1,4 @@
+# .deb originais do setup antigo e o que aconteceu com cada um
+gnome-shell-extension-manager_0.6.3-2_amd64.deb   -> FLATPAK: com.mattjakeman.ExtensionManager (REMOVIDO .deb)
+nautilus-extension-any-terminal_0.8.1-1_all.deb   -> MANTIDO .deb (instalação mantida, sem flatpak equivalente)
+stacer.deb                                        -> REMOVIDO .deb (ver programas-removidos.txt)

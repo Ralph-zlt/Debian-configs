@@ -1,0 +1,7 @@
+# Removidos por decisão (não vêm no Debian 13 default, eram extras do setup antigo)
+# Dependências do sistema e duplicatas do Debian puro NÃO entram aqui
+
+kitty                          # terminal -> volta gnome-terminal + fish
+plasma-discover-backend-flatpak # KDE no GNOME
+stacer.deb                     # abandonado 21MB -> gnome-system-monitor padrão
+io.missioncenter.MissionCenter  # flatpak removido -> monitor padrão
