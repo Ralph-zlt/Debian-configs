@@ -1,3 +1,6 @@
+# Política flatpak-first: tudo GUI third-party com flatpak oficial vem daqui (menos dependências).
+# Defaults do Debian 13 GNOME (Evince, Nautilus, Totem, Loupe, etc) ficam em APT/default — NÃO duplicar aqui (duplicar aumenta download).
+# Stacer (.deb 21MB) -> substituído por MissionCenter abaixo. ExtensionManager (.deb) -> substituído pelo flatpak abaixo.
 com.mattjakeman.ExtensionManager
 com.usebottles.bottles
 io.github.realmazharhussain.GdmSettings

@@ -1,0 +1,60 @@
+# Debian 13 (trixie) GNOME - pacotes EXTRA (limpo, sem duplicatas do default)
+# Gerado a partir de pacotes/pacotes.txt (309 pkgs) filtrando base + defaults GNOME.
+# O que foi REMOVIDO (já vem no Debian 13):
+#  base/libs: adduser, apt, bash, coreutils, systemd, libc*, lib*, locales, grub, etc (~200 pkgs)
+#  GNOME default: baobab, evince, evolution*, file-roller, gnome-calculator/calendar/clocks/contacts/control-center/disk-utility/logs/menus/snapshot/software/text-editor/tour, nautilus, totem, shotwell, loupe, tecla, yelp, seahorse, gnome-keyring, gvfs*, etc
+#  metapacotes: task-desktop, task-laptop, task-brazilian-portuguese*, tasksel
+#  removidos por decisão: kitty (não será padrão), plasma-discover-backend-flatpak (KDE no GNOME), stacer via .deb (trocado por MissionCenter flatpak), gnome-shell-extension-manager via .deb (já tem flatpak)
+#
+# Uso: sudo apt install -y $(grep -v '^#' pacotes/pacotes-apt-min.txt | grep -v '^$')
+
+# --- shell / workflow (mantido) ---
+fish
+fastfetch
+xsel
+
+# --- dev / CLI ---
+git
+curl
+wget
+distrobox
+python3-dev
+python3-pip
+python3-venv
+make
+gcc
+pkg-config
+bind9-dnsutils
+netcat-traditional
+traceroute
+lsof
+usbutils
+pciutils
+
+# --- GNOME extras (não vêm por padrão) ---
+gnome-tweaks
+gnome-software-plugin-flatpak
+flatpak
+dconf-editor
+gparted
+synaptic
+nautilus-python
+python3-nautilus
+zenity
+
+# --- temas / codecs / firmware ---
+yaru-theme-gnome-shell
+yaru-theme-gtk
+yaru-theme-icon
+gstreamer1.0-libav
+gstreamer1.0-plugins-ugly
+firmware-atheros
+firmware-intel-graphics
+firmware-realtek
+firmware-sof-signed
+intel-microcode
+
+# --- build-deps XMousePasteBlock + autoscroll ---
+libev-dev
+libx11-dev
+libxi-dev

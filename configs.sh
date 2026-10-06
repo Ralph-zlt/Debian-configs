@@ -131,21 +131,15 @@ if command -v fish >/dev/null 2>&1; then
     sudo usermod -s "$(command -v fish)" "$USER"
 fi
 
-# Define o Kitty como terminal padrão (xdg-terminal-exec)
+# Define o GNOME Terminal como terminal padrão (xdg-terminal-exec) — kitty removido
 mkdir -p ~/.config
 cat > ~/.config/xdg-terminals.list << 'EOF'
-[preferred]
-default=kitty.desktop
+org.gnome.Terminal.desktop
 EOF
 
-# Configura a extensão Open Any Terminal do Nautilus para usar o Kitty
+# Configura a extensão Open Any Terminal do Nautilus para usar o GNOME Terminal
 if command -v gsettings >/dev/null 2>&1; then
-    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal kitty || true
-fi
-
-# Remove o GNOME Terminal clássico do menu do Nautilus
-if dpkg -s nautilus-extension-gnome-terminal >/dev/null 2>&1; then
-    sudo apt purge -y nautilus-extension-gnome-terminal
+    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal gnome-terminal || true
 fi
 #############################################
 
@@ -187,25 +181,7 @@ EOF
 echo "--> Iniciando o bloqueador..."
 pkill -f xmousepasteblock
 xmousepasteblock &
-# ==========================================
-# Configuração do Kitty (Bloqueio do Middle Click)
-# ==========================================
-KITTY_DIR="$HOME/.config/kitty"
-KITTY_CONF="$KITTY_DIR/kitty.conf"
-
-echo "Configurando o terminal Kitty..."
-mkdir -p "$KITTY_DIR"
-
-# Verifica se a regra já existe no arquivo
-if ! grep -q "mouse_map middle press ungrabbed discard_event" "$KITTY_CONF" 2>/dev/null; then
-    echo -e "\n# Desativar colagem do botão do meio (Evitar conflito com autoscroll)" >> "$KITTY_CONF"
-    echo "mouse_map middle press ungrabbed discard_event" >> "$KITTY_CONF"
-    echo "mouse_map middle release ungrabbed discard_event" >> "$KITTY_CONF"
-    echo "-> Regras do mouse adicionadas ao kitty.conf."
-else
-    echo "-> As regras de mouse do Kitty já estão configuradas."
-fi
-
+# Kitty removido do setup — trava middle-click fica só no GNOME Terminal/GTK abaixo.
 echo "Sucesso! O autoscroll agora não colará mais textos e o bloqueio iniciará junto com o sistema."
 # ==========================================
 # Bloqueio de Colagem no Terminal Padrão / GTK
