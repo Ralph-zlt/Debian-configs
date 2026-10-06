@@ -9,7 +9,7 @@
 - Metapacotes: `task-desktop, task-laptop, task-brazilian-portuguese*, tasksel`
 - Editores default: `nano, vim-tiny`
 
-## EXTRA real — fica em `pacotes/pacotes-apt-min.txt` (~45 pkgs, sem kitty)
+## EXTRA real — fica em `pacotes/pacotes-apt-min.txt` (41 pkgs, sem kitty)
 
 | Programa | Por que APT (sem flatpak viável ou precisa de sistema) |
 |---|---|
@@ -25,25 +25,26 @@
 | `libev-dev, libx11-dev, libxi-dev` | build XMousePasteBlock |
 | `bind9-dnsutils, netcat-traditional, traceroute, lsof, usbutils, pciutils` | net/sysadmin |
 
-## EXTRA via Flatpak — `pacotes/flatpaks.txt` (4, já flatpak-first)
+## EXTRA via Flatpak — `pacotes/flatpaks.txt` (3, já flatpak-first)
 
 | Flatpak ID | Substitui | Motivo |
 |---|---|---|
 | `com.mattjakeman.ExtensionManager` | `gnome-shell-extension-manager_0.6.3-2_amd64.deb` | .deb redundante → remover .deb |
-| `io.missioncenter.MissionCenter` | `stacer.deb (21MB)` | Stacer abandonado/parado → MissionCenter nativo GTK4, menos deps |
 | `com.usebottles.bottles` | — | só tem flatpak oficial |
 | `io.github.realmazharhussain.GdmSettings` | — | só tem flatpak / compilação manual |
 
 `.deb` mantido: `nautilus-extension-any-terminal_0.8.1-1_all.deb` (integração Nautilus, sem flatpak).
+`.deb` NÃO usar: `stacer.deb (21MB, abandonado)` nem MissionCenter — usar o Monitor do Sistema padrão do GNOME (`gnome-system-monitor`, já vem no Debian).
 
 ## Removidos por decisão
 
 - `kitty` → volta `gnome-terminal` (default Debian) + `fish`. Remover `configs/kitty/`, trocar `Super+T` no dconf, trocar `nautilus-open-any-terminal terminal kitty → gnome-terminal`.
+- `MissionCenter` + `stacer.deb` → usar `gnome-system-monitor` padrão (teste no PC real, menos camadas). Removido override `local/share/applications/gnome-system-monitor.desktop`.
 - `plasma-discover-backend-flatpak` → resto de KDE no GNOME, remove.
 - `neofetch` → instalado via fonte em `instalar.sh` (dylanaraps, arquivado mas funciona). `fastfetch` já está no apt-min como futuro substituto. `configs/fish/config.fish` + `configs/neofetch/` mantidos.
 
 ## Autoscroll (Xorg apenas)
 
 - Debian 13 usa Wayland por padrão. `TWolczanski/linux-autoscroll` só funciona em **Xorg/XWayland**.
-- Instalador correto: `scripts/install-autoscroll.sh` (clone → `~/linux-autoscroll` → venv `.autoscroll` → `pip wheel pynput` → `autoscroll_no_icon.py` → `CLEAR_CLIPBOARD=True, TRIGGER_DELAY=0.5` → autostart).
+- Instalador correto: `scripts/install-autoscroll.sh` (clone → `~/linux-autoscroll` → venv `.autoscroll` → `pip wheel pynput PyQt5` → `autoscroll.py` COM ícone → `CLEAR_CLIPBOARD=True, TRIGGER_DELAY=0.5` → autostart).
 - No GDM escolher “GNOME on Xorg”. Em Wayland o script abre mas não rola — limitação conhecida, não bug do setup.

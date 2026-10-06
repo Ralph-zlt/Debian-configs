@@ -4,7 +4,7 @@
 #  base/libs: adduser, apt, bash, coreutils, systemd, libc*, lib*, locales, grub, etc (~200 pkgs)
 #  GNOME default: baobab, evince, evolution*, file-roller, gnome-calculator/calendar/clocks/contacts/control-center/disk-utility/logs/menus/snapshot/software/text-editor/tour, nautilus, totem, shotwell, loupe, tecla, yelp, seahorse, gnome-keyring, gvfs*, etc
 #  metapacotes: task-desktop, task-laptop, task-brazilian-portuguese*, tasksel
-#  removidos por decisão: kitty (não será padrão), plasma-discover-backend-flatpak (KDE no GNOME), stacer via .deb (trocado por MissionCenter flatpak), gnome-shell-extension-manager via .deb (já tem flatpak)
+#  removidos por decisão: kitty (não será padrão), plasma-discover-backend-flatpak (KDE no GNOME), stacer via .deb + MissionCenter (usar gnome-system-monitor padrão), gnome-shell-extension-manager via .deb (já tem flatpak)
 #
 # Uso: sudo apt install -y $(grep -v '^#' pacotes/pacotes-apt-min.txt | grep -v '^$')
 
