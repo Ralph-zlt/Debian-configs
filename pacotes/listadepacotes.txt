@@ -23,6 +23,7 @@ flatpak           # sandbox apps
 dconf-editor      # editor config GNOME baixo nível
 gparted           # particionador (precisa root)
 synaptic          # gerenciador pacotes GUI (precisa root)
+gir1.2-gmenu-3.0  # GObject introspection GNOME menu (arcmenu)
 python3-nautilus  # bindings Nautilus
 zenity            # diálogos GTK (extensão "Novo Documento")
 yaru-theme-gnome-shell  # tema shell Yaru

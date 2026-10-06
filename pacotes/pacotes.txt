@@ -23,6 +23,7 @@ flatpak
 dconf-editor
 gparted
 synaptic
+gir1.2-gmenu-3.0
 python3-nautilus
 zenity
 yaru-theme-gnome-shell
