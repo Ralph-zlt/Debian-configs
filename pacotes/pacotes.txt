@@ -1,41 +1,41 @@
-fish              # shell amigável (workflow principal)
-fastfetch         # info sistema rápido (substitui neofetch no futuro)
-xsel              # clipboard X (exigido pelo autoscroll CLEAR_CLIPBOARD)
-git               # controle de versão
-curl              # downloads HTTP
-wget              # downloads HTTP alternativo
-distrobox         # containers podman rootless
-python3-dev       # headers Python (build autoscroll/XMousePasteBlock)
-python3-pip       # pip (venv autoscroll)
-python3-venv      # venv isolado
-make              # build tools
-gcc               # compilador C
-pkg-config        # flags compilação
-bind9-dnsutils    # dig/nslookup
-netcat-traditional # nc
-traceroute        # rota rede
-lsof              # arquivos abertos
-usbutils          # lsusb
-pciutils          # lspci
-gnome-tweaks      # ajustes GNOME avançados
-gnome-software-plugin-flatpak  # integração Flatpak no Software
-flatpak           # sandbox apps
-dconf-editor      # editor config GNOME baixo nível
-gparted           # particionador (precisa root)
-synaptic          # gerenciador pacotes GUI (precisa root)
-nautilus-python   # extensões Python no Nautilus
-python3-nautilus  # bindings Nautilus
-zenity            # diálogos GTK (extensão "Novo Documento")
-yaru-theme-gnome-shell  # tema shell Yaru
-yaru-theme-gtk          # tema GTK Yaru
-yaru-theme-icon         # ícones Yaru
-gstreamer1.0-libav      # codecs vídeo/áudio
-gstreamer1.0-plugins-ugly # codecs extras
-firmware-atheros        # firmware Wi-Fi Atheros
-firmware-intel-graphics # firmware GPU Intel
-firmware-realtek        # firmware Wi-Fi/BT Realtek
-firmware-sof-signed     # firmware áudio Intel SOF
-intel-microcode         # microcódigo CPU Intel
-libev-dev               # libev (XMousePasteBlock)
-libx11-dev              # X11 headers (XMousePasteBlock)
-libxi-dev               # X Input headers (XMousePasteBlock)
+fish
+fastfetch
+xsel
+git
+curl
+wget
+distrobox
+python3-dev
+python3-pip
+python3-venv
+make
+gcc
+pkg-config
+bind9-dnsutils
+netcat-traditional
+traceroute
+lsof
+usbutils
+pciutils
+gnome-tweaks
+gnome-software-plugin-flatpak
+flatpak
+dconf-editor
+gparted
+synaptic
+nautilus-python
+python3-nautilus
+zenity
+yaru-theme-gnome-shell
+yaru-theme-gtk
+yaru-theme-icon
+gstreamer1.0-libav
+gstreamer1.0-plugins-ugly
+firmware-atheros
+firmware-intel-graphics
+firmware-realtek
+firmware-sof-signed
+intel-microcode
+libev-dev
+libx11-dev
+libxi-dev
