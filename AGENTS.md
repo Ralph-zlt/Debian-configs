@@ -26,7 +26,7 @@ passos” para “concluído”) e `docs/CHANGELOG.md` (entrada no topo) a cada 
 - `instalar.sh` → 2º: Flatpaks (`pacotes/flatpaks.txt`), APT (`pacotes/pacotes.txt`), `.deb` (`pacotes/*.deb`), extensões (`extensoes/` → `~/.local/...`), `local/` → `~/.local/`.
 - `configs.sh` → 3º: `configs/` → `~/.config/`, `gnome/dconf.ini` via `dconf load`, Fish padrão, XMousePasteBlock, travas middle-click.
 - `scripts/install-autoscroll.sh` → opcional Xorg: clona `linux-autoscroll`, venv PyQt5, autostart.
-- `pacotes/pacotes.txt` = lista de execução (43 pkgs); `pacotes/listadepacotes.txt` = mesma lista comentada (documentação).
+- `pacotes/pacotes.txt` = lista de execução (44 pkgs); `pacotes/listadepacotes.txt` = mesma lista comentada (documentação).
 - `gnome/dconf.ini` = dump GNOME (contém resíduos YaST/Pardus — decisão pendente).
 - `configs/fish/`, `configs/fastfetch/` = dotfiles (migrado do `neofetch` em 2026-10-12; original arquivado em `Bekaps/`).
 - `extensoes/` (11) + `local/share/gnome-shell/extensions/` (9) = união intencional de 11 extensões vendored (ver Exceção abaixo). `extensoes/extensoes.txt` é o manifesto (11 UUIDs, mesma ordem pode divergir do `ls`).

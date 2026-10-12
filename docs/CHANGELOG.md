@@ -2,6 +2,9 @@
 
 > Entradas no topo (mais recente primeiro). Formato: data + o que mudou + por quê + onde.
 
+## 2026-10-12 — podman backend distrobox (43→44 pkgs)
+- `podman` adicionado após `distrobox` em `pacotes.txt` + `listadepacotes.txt`; READMEs/AGENTS 43→44. Motivo: `distrobox` sem backend falhava em install limpo; podman rootless nativo Debian resolve (uidmap/slirp4netns via recommends). Antiga (`9825c7b`) em `Bekaps/Debian-configs-v-9825c7b-2026-10-12/`. Validação: contagem 44, `bash -n` ×4 ok, `shellcheck` limpo. Onde: branch `limpo-flatpak`. Pendente funcional: `distrobox create` na VM limpa.
+
 ## 2026-10-12 — v-nova: fuse3 + remoção neofetch + versionamento
 - `fuse3` adicionado (42→43 pkgs, READMEs/AGENTS atualizados); `configs/neofetch/config.conf` removido (fastfetch validado, backup em `Bekaps/.../neofetch-orig/`); refs de transição limpas nos READMEs/AGENTS. Motivo: alta compatibilidade AppImage + migração concluída. Versionamento: antiga (`4d9352e`) arquivada em `Bekaps/Debian-configs-v-antiga-2026-10-12/` (20M, `git archive` + `ORIGEM.txt`); nova versão commitada em `limpo-flatpak` (`d0e98cc`). Validação: `bash -n` ×4 ok, grep neofetch funcional zerado.
 

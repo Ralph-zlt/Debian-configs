@@ -5,6 +5,7 @@ git               # controle de versão
 curl              # downloads HTTP
 wget              # downloads HTTP alternativo
 distrobox         # containers podman rootless
+podman              # backend rootless do distrobox (detectado automaticamente; puxa uidmap/slirp4netns via recommends)
 python3-dev       # headers Python (build autoscroll/XMousePasteBlock)
 python3-pip       # pip (venv autoscroll)
 python3-venv      # venv isolado

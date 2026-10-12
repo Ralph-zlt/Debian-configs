@@ -1,6 +1,6 @@
 # ROADMAP — Debian-configs (RDEB)
 
-> Changelog: 2026-10-12 — criação. 2026-10-12 — P0 concluído. 2026-10-12 — P1-1/P1-2/P1-3-base concluídos. 2026-10-12 — P1-4 docs concluído. 2026-10-12 — P2-2/P2-3 concluídos. 2026-10-12 — v-nova: fuse3 (43 pkgs) + remoção neofetch + versionamento (antiga em Bekaps).
+> Changelog: 2026-10-12 — criação. 2026-10-12 — P0 concluído. 2026-10-12 — P1-1/P1-2/P1-3-base concluídos. 2026-10-12 — P1-4 docs concluído. 2026-10-12 — P2-2/P2-3 concluídos. 2026-10-12 — v-nova: fuse3 (43 pkgs) + remoção neofetch + versionamento. 2026-10-12 — podman backend distrobox (44 pkgs).
 > Última atualização: 2026-10-12.
 
 ---
@@ -19,6 +19,7 @@
 ---
 
 ## 3. Concluído
+- [x] (2026-10-12) podman: backend rootless do `distrobox` adicionado (43→44 pkgs; puxa uidmap/slirp4netns via recommends). Sem ele, `distrobox create` falhava em install limpo. Antiga (`9825c7b`) em `Bekaps/Debian-configs-v-9825c7b-2026-10-12/`.
 - [x] (2026-10-12) v-nova: `fuse3` adicionado (43 pkgs, alta compatibilidade AppImage); `configs/neofetch/` removido do repo (export fastfetch confirmado + backup); versionamento: antiga (`4d9352e`) em `Bekaps/Debian-configs-v-antiga-2026-10-12/`, nova commitada em `limpo-flatpak`.
 - [x] (2026-10-12) P2-2/P2-3 testes+reviews: `bash -n` ×4 ok; `shellcheck` warning-level limpo (2 infos SC2086 falso-positivas: word-splitting intencional nas listas APT/Flatpak); fastfetch JSON ok; grep MissionCenter/stacer/docker/neofetch zerados; zero segredos; contagens conferem (42 APT, 3 flatpaks, 1 .deb, 11 extensões). Security: sem `curl|bash`, clones via https `--depth 1`, APT oficial; risco residual: clones sem pin de commit. Conformance: código × docs consistente.
 - [x] (2026-10-12) P1-4 docs: README PT/EN (`gsconnect` no lugar de `blur-my-shell`, 42 pkgs, fastfetch, AppImage); `.gitignore` sem `stacer`/`extension-manager`; duplicados documentados no `AGENTS.md` (xdg-terminals, dconf YaST/Pardus mantido como dump fiel); `extensoes.txt` confirmado como manifesto (mesmo conjunto).
