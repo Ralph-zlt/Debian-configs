@@ -3,7 +3,7 @@
 > Entradas no topo (mais recente primeiro). Formato: data + o que mudou + por quê + onde.
 
 ## 2026-10-12 — v-nova: fuse3 + remoção neofetch + versionamento
-- `fuse3` adicionado (42→43 pkgs, READMEs/AGENTS atualizados); `configs/neofetch/config.conf` removido (fastfetch validado, backup em `Bekaps/.../neofetch-orig/`); refs de transição limpas nos READMEs/AGENTS. Motivo: alta compatibilidade AppImage + migração concluída. Versionamento: antiga (`4d9352e`) arquivada em `Bekaps/Debian-configs-v-antiga-2026-10-12/` (20M, `git archive` + `ORIGEM.txt`); nova versão commitada em `limpo-flatpak` (`49d1457`). Validação: `bash -n` ×4 ok, grep neofetch funcional zerado.
+- `fuse3` adicionado (42→43 pkgs, READMEs/AGENTS atualizados); `configs/neofetch/config.conf` removido (fastfetch validado, backup em `Bekaps/.../neofetch-orig/`); refs de transição limpas nos READMEs/AGENTS. Motivo: alta compatibilidade AppImage + migração concluída. Versionamento: antiga (`4d9352e`) arquivada em `Bekaps/Debian-configs-v-antiga-2026-10-12/` (20M, `git archive` + `ORIGEM.txt`); nova versão commitada em `limpo-flatpak` (`d0e98cc`). Validação: `bash -n` ×4 ok, grep neofetch funcional zerado.
 
 ## 2026-10-12 — P2-2/P2-3 testes+reviews (Fase 4)
 - `bash -n` ×4 ok; `shellcheck` limpo (2 infos SC2086 falso-positivas, word-splitting intencional); fastfetch JSON ok; greps zerados; zero segredos; contagens ok (42/3/1/11). Security sem achados bloqueantes (residual: clones sem pin). Onde: branch `limpo-flatpak` (não commitado; merge P2-1 aguarda dono).
