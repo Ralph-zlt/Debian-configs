@@ -2,6 +2,9 @@
 
 > Entradas no topo (mais recente primeiro). Formato: data + o que mudou + por quê + onde.
 
+## 2026-10-12 — limpeza dconf (programas removidos/ausentes)
+- `gnome/dconf.ini` (−52/+8 linhas): removidos Pardus/YaST, blur-my-shell ×6, notificações brave/virtualboxvm, portais chromium/waveterm, pinned virtualbox/discover/kdeconnect/stacer, calamares, disabled-extensions; `enabled-extensions` = 11 UUIDs do `extensoes.txt`; brave→firefox (atalho+favoritos); `configs/discoverrc` apagado. Mantidos: `rounded-window-corners-reborn` (schema real da fxgn), eds, libreoffice. Motivo: sistema limpo, regra config-de-programa-removido. Backup: `Bekaps/Debian-configs-pre-dconf-2026-10-12/`. Validação: parse 54 seções, greps zerados, enabled==11. Onde: branch `limpo-flatpak`.
+
 ## 2026-10-12 — podman backend distrobox (43→44 pkgs)
 - `podman` adicionado após `distrobox` em `pacotes.txt` + `listadepacotes.txt`; READMEs/AGENTS 43→44. Motivo: `distrobox` sem backend falhava em install limpo; podman rootless nativo Debian resolve (uidmap/slirp4netns via recommends). Antiga (`9825c7b`) em `Bekaps/Debian-configs-v-9825c7b-2026-10-12/`. Validação: contagem 44, `bash -n` ×4 ok, `shellcheck` limpo. Onde: branch `limpo-flatpak`. Pendente funcional: `distrobox create` na VM limpa.
 
