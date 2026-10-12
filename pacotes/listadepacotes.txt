@@ -1,5 +1,5 @@
 fish              # shell amigável (workflow principal)
-fastfetch         # info sistema rápido (substitui neofetch no futuro)
+fastfetch         # info sistema rápido (migrado do neofetch em 2026-10-12; greeting fish usa fastfetch)
 xsel              # clipboard X (exigido pelo autoscroll CLEAR_CLIPBOARD)
 git               # controle de versão
 curl              # downloads HTTP
@@ -39,3 +39,5 @@ intel-microcode         # microcódigo CPU Intel
 libev-dev               # libev (XMousePasteBlock)
 libx11-dev              # X11 headers (XMousePasteBlock)
 libxi-dev               # X Input headers (XMousePasteBlock)
+libfuse2t64             # FUSE 2 (AppImages tipo 2; no Trixie o pacote chama libfuse2t64)
+fuse3                   # FUSE 3 (AppImages runtime novo; alta compatibilidade)

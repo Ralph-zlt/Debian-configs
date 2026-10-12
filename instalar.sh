@@ -61,26 +61,13 @@ fi
 echo "Instalação dos aplicativos Flatpak concluída!"
 
 ########################################
-# Instala Neofetch
-########################################
-echo
-echo " Instalando Neofetch..."
-sudo apt install -y git make
-TMPDIR=$(mktemp -d)
-git clone https://github.com/dylanaraps/neofetch.git "$TMPDIR/neofetch"
-cd "$TMPDIR/neofetch"
-sudo make install
-cd "$BASE"
-rm -rf "$TMPDIR"
-echo "Neofetch instalado com sucesso."
-
-########################################
-# Pacotes Debian
+# Pacotes Debian (inclui fastfetch — ver pacotes/pacotes.txt)
 ########################################
 ARQUIVO_PACOTES="$BASE/pacotes/pacotes.txt"
 if [ -f "$ARQUIVO_PACOTES" ]; then
     echo
     echo "Instalando pacotes Debian..."
+    sudo apt update
     PACOTES_APT=$(grep -v '^#' "$ARQUIVO_PACOTES" | grep -v '^$')
     if [ -n "$PACOTES_APT" ]; then
         # Instala todos os pacotes de uma vez só

@@ -39,3 +39,5 @@ intel-microcode
 libev-dev
 libx11-dev
 libxi-dev
+libfuse2t64
+fuse3

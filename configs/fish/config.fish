@@ -1,10 +1,10 @@
 function fish_greeting
-    neofetch
+    fastfetch
 end
 
 function clear_and_welcome
     printf "\033c"
-    neofetch
+    fastfetch
     commandline -f repaint
 end
 

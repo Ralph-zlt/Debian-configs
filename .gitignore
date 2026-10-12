@@ -1,8 +1,6 @@
 # Ignorar binários grandes e pacotes .deb de terceiros
 pacotes/*.deb
 !pacotes/nautilus-extension-any-terminal_*.deb
-!pacotes/gnome-shell-extension-manager_*.deb
-!pacotes/stacer.deb
 
 # Ignorar arquivos de sistema e cache
 .DS_Store

@@ -129,7 +129,7 @@ sudo apt install -y make gcc pkg-config libev-dev libx11-dev libxi-dev git
 echo "--> Baixando o repositório..."
 cd /tmp
 rm -rf XMousePasteBlock
-git clone https://github.com/milaq/XMousePasteBlock.git
+git clone --depth 1 https://github.com/milaq/XMousePasteBlock.git
 cd XMousePasteBlock
 
 # 3. Compilar e instalar o programa
@@ -154,7 +154,7 @@ EOF
 
 # 5. Iniciar o programa na sessão atual
 echo "--> Iniciando o bloqueador..."
-pkill -f xmousepasteblock
+pkill -f xmousepasteblock || true
 xmousepasteblock &
 # Kitty removido do setup — trava middle-click fica só no GNOME Terminal/GTK abaixo.
 echo "Sucesso! O autoscroll agora não colará mais textos e o bloqueio iniciará junto com o sistema."

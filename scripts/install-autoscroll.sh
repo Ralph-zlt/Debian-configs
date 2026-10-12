@@ -19,7 +19,7 @@ sudo apt install -y python3-dev python3-venv xsel git libgl1 libegl1 libxkbcommo
 
 if [ ! -d "$TARGET/.git" ]; then
   rm -rf "$TARGET"
-  git clone "$REPO" "$TARGET"
+  git clone --depth 1 "$REPO" "$TARGET"
 else
   git -C "$TARGET" pull --ff-only || true
 fi
@@ -31,8 +31,9 @@ fi
 "$VENV/bin/python" -m pip install pynput PyQt5
 
 # Config recomendada: não colar ao entrar/sair (middle-click), meio-segundo de hold evita cliques acidentais
-sed -i 's/self.CLEAR_CLIPBOARD = False/self.CLEAR_CLIPBOARD = True/' "$SCRIPT"
-sed -i 's/self.TRIGGER_DELAY = 0$/self.TRIGGER_DELAY = 0.5/' "$SCRIPT"
+# Guardas grep -q garantem idempotência (re-run não duplica nem falha)
+grep -q 'self.CLEAR_CLIPBOARD = True' "$SCRIPT" || sed -i 's/self.CLEAR_CLIPBOARD = False/self.CLEAR_CLIPBOARD = True/' "$SCRIPT"
+grep -q 'self.TRIGGER_DELAY = 0.5' "$SCRIPT" || sed -i 's/self.TRIGGER_DELAY = 0$/self.TRIGGER_DELAY = 0.5/' "$SCRIPT"
 chmod u+x "$SCRIPT"
 
 mkdir -p ~/.config/autostart
