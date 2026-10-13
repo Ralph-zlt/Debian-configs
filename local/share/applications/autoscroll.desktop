@@ -1,7 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=AutoScroll
-Exec=$HOME/linux-autoscroll/autoscroll_no_icon.py
+Name=Linux AutoScroll (Xorg)
+Exec=bash -c "sleep 3 && $HOME/linux-autoscroll/.autoscroll/bin/python $HOME/linux-autoscroll/autoscroll.py"
 Icon=input-mouse
 Terminal=false
 Categories=Utility;
+X-GNOME-Autostart-enabled=true

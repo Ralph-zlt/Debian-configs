@@ -1,0 +1,44 @@
+fish              # shell amigável (workflow principal)
+fastfetch         # info sistema rápido (migrado do neofetch em 2026-10-12; greeting fish usa fastfetch)
+xsel              # clipboard X (exigido pelo autoscroll CLEAR_CLIPBOARD)
+git               # controle de versão
+curl              # downloads HTTP
+wget              # downloads HTTP alternativo
+distrobox         # containers podman rootless
+podman              # backend rootless do distrobox (detectado automaticamente; puxa uidmap/slirp4netns via recommends)
+python3-dev       # headers Python (build autoscroll/XMousePasteBlock)
+python3-pip       # pip (venv autoscroll)
+python3-venv      # venv isolado
+make              # build tools
+gcc               # compilador C
+pkg-config        # flags compilação
+bind9-dnsutils    # dig/nslookup
+netcat-traditional # nc
+traceroute        # rota rede
+lsof              # arquivos abertos
+usbutils          # lsusb
+pciutils          # lspci
+gnome-tweaks      # ajustes GNOME avançados
+gnome-software-plugin-flatpak  # integração Flatpak no Software
+flatpak           # sandbox apps
+dconf-editor      # editor config GNOME baixo nível
+gparted           # particionador (precisa root)
+synaptic          # gerenciador pacotes GUI (precisa root)
+gir1.2-gmenu-3.0  # GObject introspection GNOME menu (arcmenu)
+python3-nautilus  # bindings Nautilus
+zenity            # diálogos GTK (extensão "Novo Documento")
+yaru-theme-gnome-shell  # tema shell Yaru
+yaru-theme-gtk          # tema GTK Yaru
+yaru-theme-icon         # ícones Yaru
+gstreamer1.0-libav      # codecs vídeo/áudio
+gstreamer1.0-plugins-ugly # codecs extras
+firmware-atheros        # firmware Wi-Fi Atheros
+firmware-intel-graphics # firmware GPU Intel
+firmware-realtek        # firmware Wi-Fi/BT Realtek
+firmware-sof-signed     # firmware áudio Intel SOF
+intel-microcode         # microcódigo CPU Intel
+libev-dev               # libev (XMousePasteBlock)
+libx11-dev              # X11 headers (XMousePasteBlock)
+libxi-dev               # X Input headers (XMousePasteBlock)
+libfuse2t64             # FUSE 2 (AppImages tipo 2; no Trixie o pacote chama libfuse2t64)
+fuse3                   # FUSE 3 (AppImages runtime novo; alta compatibilidade)
