@@ -67,4 +67,5 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 ### 📝 Notas de contexto
 - `main` tem só `Initial commit`; trabalho real está em `limpo-flatpak` (8 commits) — merge pendente de validação do dono.
 - `PROJETOS.md` referenciava `rdeb/` inexistente — corrigido para `Debian-configs/`.
-- (2026-10-12) Sessão Fase 0–4 executada: docs base + P0 + fastfetch/docker/AppImage-base + P1-4 + testes. SC2086 do shellcheck são falso-positivos (word-splitting intencional). Mudanças não commitadas; commit+merge aguardam dono.
+- (2026-10-12) Sessão Fase 0–4 executada: docs base + P0 + fastfetch/docker/AppImage-base + P1-4 + testes. SC2086 do shellcheck são falso-positivos (word-splitting intencional).
+- (2026-10-20) Fix dconf (2026-10-19) + Tilix/extensão Nautilus commitados juntos (`514648a` em `limpo-flatpak`); `assets/` do dono segue untracked; merge para `main` aguarda validação do dono + testes `--vm`.
