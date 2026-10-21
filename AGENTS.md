@@ -27,7 +27,6 @@ passos” para “concluído”) e `docs/CHANGELOG.md` (entrada no topo) a cada 
 - `configs.sh` → 3º: `configs/` → `~/.config/`, `gnome/dconf.ini` via `dconf load` (garante `dconf-cli`, erro explícito, valida pós-load; **rodar dentro da sessão GNOME**), Fish padrão, XMousePasteBlock, travas middle-click.
 - `scripts/install-autoscroll.sh` → opcional Xorg: clona `linux-autoscroll`, venv PyQt5, autostart.
 - `pacotes/pacotes.txt` = lista de execução (45 pkgs); `pacotes/listadepacotes.txt` = mesma lista comentada (documentação).
-- `gnome/dconf.ini` = dump GNOME (contém resíduos YaST/Pardus — decisão pendente).
 - `configs/fish/`, `configs/fastfetch/` = dotfiles (migrado do `neofetch` em 2026-10-12; original arquivado em `Bekaps/`).
 - `extensoes/` (11) + `local/share/gnome-shell/extensions/` (9) = união intencional de 11 extensões vendored (ver Exceção abaixo). `extensoes/extensoes.txt` é o manifesto (11 UUIDs, mesma ordem pode divergir do `ls`).
 - `configs/xdg-terminals.list` × `configs/gnome-xdg-terminals.list` = conteúdo idêntico intencional (transição de nome); ambos apontam para `com.gexperts.Tilix.desktop`; `configs.sh` ainda reescreve `~/.config/xdg-terminals.list` via heredoc — fonte efetiva é o heredoc (também Tilix). Fish abre via shell de login (`usermod`), sem dconf próprio do Tilix.
@@ -39,6 +38,7 @@ passos” para “concluído”) e `docs/CHANGELOG.md` (entrada no topo) a cada 
 
 ## Não versionar (neste projeto)
 - `pacotes/*.deb` de terceiros (exceto os explicitamente liberados no `.gitignore`).
+- `assets/` (imagens pessoais do dono; ignorado no `.gitignore` desde 2026-10-21).
 - Segredos: chaves, certificados, cookies, histórico de navegador, IPs locais, usernames (ver `README.md` § Segurança).
 
 ## Validação de mudanças
@@ -66,7 +66,8 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-19) **dconf do Debian 13 (Trixie) é estrito:** array vazio sem tipo (`[]` nu) é rejeitado e `dconf load` é all-or-nothing (uma chave ruim zera o restore inteiro). Dump sempre com tipos explícitos: `@as []`. Prova: log `erro` da VM (linha 150) + suíte 01 (FAIL antes, PASS depois).
 - (2026-10-19) Todo bug vira teste de regressão antes do fix (`tests/regressao/`, política em `REGRAS.md` §2).
 ### 📝 Notas de contexto
-- `main` tem só `Initial commit`; trabalho real está em `limpo-flatpak` (8 commits) — merge pendente de validação do dono.
+- `main` = `07bfac8` (merge do PR #1); trabalho real em `limpo-flatpak`, sincronizada com o GitHub em 2026-10-21 — merge para `main` pendente de validação do dono + testes `--vm`.
 - `PROJETOS.md` referenciava `rdeb/` inexistente — corrigido para `Debian-configs/`.
 - (2026-10-12) Sessão Fase 0–4 executada: docs base + P0 + fastfetch/docker/AppImage-base + P1-4 + testes. SC2086 do shellcheck são falso-positivos (word-splitting intencional).
-- (2026-10-20) Fix dconf (2026-10-19) + Tilix/extensão Nautilus commitados juntos (`514648a` em `limpo-flatpak`); `assets/` do dono segue untracked; merge para `main` aguarda validação do dono + testes `--vm`.
+- (2026-10-20) Fix dconf (2026-10-19) + Tilix/extensão Nautilus commitados juntos (`514648a` em `limpo-flatpak`); merge para `main` aguarda validação do dono + testes `--vm`.
+- (2026-10-21) `limpo-flatpak` sincronizada com o GitHub (3 commits pendentes enviados); `assets/` passou a ser ignorado (imagens pessoais, não versionadas).
