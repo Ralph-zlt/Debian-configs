@@ -1,7 +1,7 @@
 # ROADMAP — Debian-configs (RDEB)
 
-> Changelog: 2026-10-12 — criação. 2026-10-12 — P0 concluído. 2026-10-12 — P1-1/P1-2/P1-3-base concluídos. 2026-10-12 — P1-4 docs concluído. 2026-10-12 — P2-2/P2-3 concluídos. 2026-10-12 — v-nova: fuse3 (43 pkgs) + remoção neofetch + versionamento. 2026-10-12 — podman backend distrobox (44 pkgs).
-> Última atualização: 2026-10-12.
+> Changelog: 2026-10-12 — criação. 2026-10-12 — P0 concluído. 2026-10-12 — P1-1/P1-2/P1-3-base concluídos. 2026-10-12 — P1-4 docs concluído. 2026-10-12 — P2-2/P2-3 concluídos. 2026-10-12 — v-nova: fuse3 (43 pkgs) + remoção neofetch + versionamento. 2026-10-12 — podman backend distrobox (44 pkgs). 2026-10-19 — P3 fix dconf + suíte de regressão (política bug→teste). 2026-10-20 — Tilix como terminal padrão (45 pkgs) + suíte 02 extensão Nautilus. 2026-10-20 — tema Yaru-bark-dark (ícones Yaru-dark) + suíte 03.
+> Última atualização: 2026-10-20.
 
 ---
 
@@ -13,12 +13,16 @@
 
 ## 2. Próximos passos
 
-- [ ] P2-1 merge `limpo-flatpak` → `main` (só com validação do dono; inclui commit desta sessão)
-- [ ] Pendente do dono: teste funcional em VM limpa Debian 13; extras AppImage se algum app exigir além de FUSE; decisão limpar `dconf` YaST/Pardus
+- [ ] P2-1 merge `limpo-flatpak` → `main` (só com validação do dono; inclui commits desta sessão)
+- [ ] Dono roda `tests/regressao/01-dconf-extensions.sh --vm` e `tests/regressao/02-nautilus-any-terminal.sh --vm` na VM limpa Debian 13 (dentro da sessão GNOME): validar restore dconf e o "Abrir terminal aqui" do Nautilus com tilix e gnome-terminal; extras AppImage se algum app exigir além de FUSE
 
 ---
 
 ## 3. Concluído
+- [x] (2026-10-20) P4-bis tema: decisão do dono de trocar as configs dark — `accent-color` `purple`→`bark`, `gtk-theme` `Yaru-dark`→`Yaru-bark-dark`, `icon-theme` `Yaru`→`Yaru-dark` (ícone é a exceção), user-theme Shell `Yaru-purple-dark`→`Yaru-bark-dark`; `color-scheme` prefer-dark mantido. Variedades verificadas nos debs do Debian 13 (yaru-theme 24.04.3: bark/bark-dark no gtk+shell, Yaru-dark nos ícones). Suíte nova `tests/regressao/03-themes.sh --static` (5 checks; nasceu 4 FAIL antes do fix, verde depois). Sem backup novo (reversível via git; pré-tilix já preservado).
+- [x] (2026-10-20) P4 Tilix como terminal padrão: `tilix` no `pacotes.txt` (44→45) + `listadepacotes.txt`; `configs.sh` heredoc → `com.gexperts.Tilix.desktop`, gsettings da extensão → `tilix`, `nautilus -q` após troca; `configs/xdg-terminals.list` × `gnome-xdg-terminals.list` → Tilix; `dconf.ini` custom0 (Ctrl+Alt+T) → `tilix`; fish via shell de login (sem dconf extra). GNOME Terminal mantido como alternativo. Suíte nova `tests/regressao/02-nautilus-any-terminal.sh` (--static: 11 checks, nasceu com 9 FAIL antes do fix, verde depois; --vm p/ dono). Backup: `Bekaps/Debian-configs-pre-tilix-2026-10-20/`.
+- [x] (2026-10-19) P3 fix dconf + regressão: bug "configs das extensões não aplicavam" (arcmenu/dash-to-panel com defaults na VM) — `configs.sh` agora garante `dconf-cli`, roda `dconf load` com erro explícito e valida pós-load; `instalar.sh` `$BASE` no caminho do flatpaks.txt; suíte `tests/regressao/01-dconf-extensions.sh` (`--static` 29 PASS / `--vm` p/ dono). Comparativo pré (`7efb06e`) × pós-flatpak (`c51094f`): nada perdido além do intencional. Backup: `Bekaps/Debian-configs-pre-fix-dconf-2026-10-19/`. Política nova documentada em `REGRAS.md` §2 / `AGENTS.UNIVERSAL.md` Regra 8 / `PROJETOS.md`.
+- [x] (2026-10-19) P3-bis causa raiz: teste `--vm` do dono evidenciou que o dconf do Trixie rejeita `[]` nu (`unable to infer type`) e o load é all-or-nothing — 0/252 chaves aplicadas. Fix: `@as []` em `disabled-extensions` e `recently-installed-apps` (linhas 150/177). Suíte apertada: 2 FAILs antes do fix, verde depois.
 - [x] (2026-10-12) limpeza dconf: removidas configs de programas removidos/ausentes (pastas Pardus/YaST, 6 seções blur-my-shell, notificações brave/virtualboxvm, portais chromium/waveterm, pinned virtualbox/discover/kdeconnect/stacer, calamares, disabled forge/tiling/gTile); `enabled-extensions` reescrito com os 11 UUIDs do `extensoes.txt` (+gsconnect, −fantasmas); atalhos/favoritos brave→firefox; `configs/discoverrc` apagado. Mantidos por funcionais: `rounded-window-corners-reborn` (schema da extensão fxgn), `evolution-data-server`, libreoffice pinned. Backup: `Bekaps/Debian-configs-pre-dconf-2026-10-12/`. README dconf corrigido (atalhos reais + Firefox).
 - [x] (2026-10-12) podman: backend rootless do `distrobox` adicionado (43→44 pkgs; puxa uidmap/slirp4netns via recommends). Sem ele, `distrobox create` falhava em install limpo. Antiga (`9825c7b`) em `Bekaps/Debian-configs-v-9825c7b-2026-10-12/`.
 - [x] (2026-10-12) v-nova: `fuse3` adicionado (43 pkgs, alta compatibilidade AppImage); `configs/neofetch/` removido do repo (export fastfetch confirmado + backup); versionamento: antiga (`4d9352e`) em `Bekaps/Debian-configs-v-antiga-2026-10-12/`, nova commitada em `limpo-flatpak`.
