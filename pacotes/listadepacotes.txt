@@ -27,6 +27,7 @@ synaptic          # gerenciador pacotes GUI (precisa root)
 gir1.2-gmenu-3.0  # GObject introspection GNOME menu (arcmenu)
 python3-nautilus  # bindings Nautilus
 zenity            # diálogos GTK (extensão "Novo Documento")
+tilix             # terminal padrão (xdg-terminals.list + Ctrl+Alt+T); fish via shell de login
 yaru-theme-gnome-shell  # tema shell Yaru
 yaru-theme-gtk          # tema GTK Yaru
 yaru-theme-icon         # ícones Yaru

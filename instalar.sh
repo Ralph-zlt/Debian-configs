@@ -45,7 +45,7 @@ trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
 ########################################
 echo
 echo "Instalando aplicativos Flatpak..."
-ARQUIVO_FLATPAK="pacotes/flatpaks.txt"
+ARQUIVO_FLATPAK="$BASE/pacotes/flatpaks.txt"
 
 if [ -f "$ARQUIVO_FLATPAK" ]; then
     # Lê todos os apps ignorando linhas vazias ou comentários

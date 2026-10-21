@@ -38,7 +38,7 @@ cd Debian-configs
 bash flatpak.sh      # 1º - Instala Flatpak + configura Flathub
 # → Faça logout/login (ou reinicie) para o Flatpak funcionar 100%
 
-bash instalar.sh     # 2º - Apps Flatpak + 44 pkgs APT + 1 .deb + extensões GNOME + ~/.local
+bash instalar.sh     # 2º - Apps Flatpak + 45 pkgs APT + 1 .deb + extensões GNOME + ~/.local
 # → Faça logout/login para extensões carregarem
 
 bash configs.sh      # 3º - dconf, Fish, XMousePasteBlock, GTK middle-click block
@@ -56,7 +56,7 @@ bash scripts/install-autoscroll.sh
 | Script | Responsabilidade | Reinício necessário? |
 |--------|------------------|---------------------|
 | `flatpak.sh` | Instala `flatpak`, `gnome-software-plugin-flatpak`, adiciona Flathub, `flatpak update` | **Sim** (logout/login) |
-| `instalar.sh` | Apps Flatpak (3), 44 pacotes APT, 1 `.deb`, 11 extensões GNOME, restaura `~/.local` | **Sim** (logout/login p/ extensões) |
+| `instalar.sh` | Apps Flatpak (3), 45 pacotes APT, 1 `.deb`, 11 extensões GNOME, restaura `~/.local` | **Sim** (logout/login p/ extensões) |
 | `configs.sh` | dconf (GNOME), Fish como shell padrão, XMousePasteBlock, GTK middle-click block | **Sim** (reinício completo) |
 | `scripts/install-autoscroll.sh` | Autoscroll estilo Windows (ícone, Xorg apenas) | **Sim** (logout + sessão Xorg) |
 
@@ -69,11 +69,11 @@ bash scripts/install-autoscroll.sh
 | Categoria | Detalhes |
 |-----------|----------|
 | **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh`, `scripts/install-autoscroll.sh` — idempotentes, seguros, com `set -e` |
-| **APT (44 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, distrobox+podman), firmware, fish, fastfetch, gnome-tweaks, dconf-editor, gparted, synaptic, temas Yaru, codecs, drivers, AppImage (libfuse2t64 + fuse3) |
+| **APT (45 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, distrobox+podman), firmware, fish, fastfetch, **tilix (terminal padrão)**, gnome-tweaks, dconf-editor, gparted, synaptic, temas Yaru, codecs, drivers, AppImage (libfuse2t64 + fuse3) |
 | **Flatpak (3)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings |
 | **`.deb` (1)** | Nautilus Open Any Terminal (integração "Abrir terminal aqui") |
 | **Extensões GNOME (11)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, gsconnect, quick-settings-tweaks, gnome-fuzzy-app-search, rounded-window-corners |
-| **dconf** | `gnome/dconf.ini` — keybindings (Ctrl+Alt+T=terminal, Ctrl+Alt+G=Firefox, Ctrl+Alt+N=arquivos), tema Yaru-dark, middle-click paste desabilitado, appfolders, notificações, 11 extensões habilitadas |
+| **dconf** | `gnome/dconf.ini` — keybindings (Ctrl+Alt+T=Tilix, Ctrl+Alt+G=Firefox, Ctrl+Alt+N=arquivos), tema Yaru-dark, middle-click paste desabilitado, appfolders, notificações, 11 extensões habilitadas |
 | **Dotfiles** | `configs/fish/` (welcome + fastfetch), `configs/fastfetch/` (`config.jsonc` com logo Linux + cores personalizadas) |
 | **Autoscroll** | `scripts/install-autoscroll.sh` — instala versão com ícone (PyQt5), autostart configurado. **Requer sessão "GNOME on Xorg"** |
 

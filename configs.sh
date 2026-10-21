@@ -35,11 +35,27 @@ fi
 ########################################
 # Restauração do dconf (GNOME)
 ########################################
+# BUG 2026-10-19: `dconf load ... || echo` engolia o erro — na VM as configs das
+# extensões (arcmenu, dash-to-panel, etc.) subiam com defaults. Agora a falha é
+# explícita e o dconf é garantido. Deve rodar DENTRO da sessão GNOME do usuário.
 if [ -f "$BASE/gnome/dconf.ini" ]; then
     echo
     echo " Restaurando configurações do GNOME..."
-    dconf load / < "$BASE/gnome/dconf.ini" || \
-    echo "Aviso: falha ao restaurar dconf."
+    if ! command -v dconf >/dev/null 2>&1; then
+        echo "--> 'dconf' não encontrado; instalando dconf-cli..."
+        sudo apt update
+        sudo apt install -y dconf-cli
+    fi
+    if ! dconf load / < "$BASE/gnome/dconf.ini"; then
+        echo "ERRO: dconf load falhou — configs do GNOME/extensões NÃO foram aplicadas." >&2
+        echo "Rode este script dentro da sessão GNOME do usuário (com D-Bus ativo)." >&2
+        exit 1
+    fi
+    if [ -z "$(dconf read /org/gnome/shell/enabled-extensions)" ]; then
+        echo "ERRO: enabled-extensions vazio após o load — restauração incompleta." >&2
+        exit 1
+    fi
+    echo " dconf restaurado e verificado (extensões habilitadas aplicadas)."
 fi
 
 ########################################
@@ -106,16 +122,20 @@ if command -v fish >/dev/null 2>&1; then
     sudo usermod -s "$(command -v fish)" "$USER"
 fi
 
-# Define o GNOME Terminal como terminal padrão (xdg-terminal-exec) — kitty removido
+# Define o Tilix como terminal padrão (xdg-terminal-exec) — kitty removido;
+# GNOME Terminal continua instalado como alternativo.
 mkdir -p ~/.config
 cat > ~/.config/xdg-terminals.list << 'EOF'
-org.gnome.Terminal.desktop
+com.gexperts.Tilix.desktop
 EOF
 
-# Configura a extensão Open Any Terminal do Nautilus para usar o GNOME Terminal
+# Configura a extensão Open Any Terminal do Nautilus para usar o Tilix
 if command -v gsettings >/dev/null 2>&1; then
-    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal gnome-terminal || true
+    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal tilix || true
 fi
+
+# Recarrega o Nautilus para a extensão (e o novo padrão) valerem na sessão atual
+nautilus -q 2>/dev/null || true
 #############################################
 
 echo "Iniciando a instalação e configuração do xmousepasteblock..."
