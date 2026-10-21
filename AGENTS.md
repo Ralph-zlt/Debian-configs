@@ -59,6 +59,7 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-12) `MissionCenter` removido por decisão; padrão é `gnome-system-monitor`.
 - (2026-10-12) Migração `neofetch` → `fastfetch` mantendo pinguim Linux + cores `7 1 3 7 1 3`.
 - (2026-10-20) **Tilix é o terminal padrão** (xdg-terminals.list + Ctrl+Alt+T + extensão Nautilus); GNOME Terminal permanece instalado como alternativo (perfis dconf preservados). Fish abre via shell de login — sem dconf próprio do Tilix. `configs.sh` roda `nautilus -q` para recarregar a extensão do Nautilus.
+- (2026-10-20) **Tema do dono: `Yaru-bark-dark`** (GTK+Shell, `accent-color='bark'`); **ícones `Yaru-dark`** (exceção intencional às demais partes de tema); `color-scheme='prefer-dark'`. Guardado pela suíte 03.
 ### ❌ Corrigido / Lição aprendida
 - (2026-10-12) Não propor minimalismo extremo neste projeto (intenção é export do ambiente).
 - (2026-10-19) Nunca engolir falha de comando crítico com `|| echo` — `dconf load` falhava silencioso e as configs das extensões não aplicavam na VM. Padrão: falha explícita + verificação pós-comando.

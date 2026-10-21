@@ -73,7 +73,7 @@ bash scripts/install-autoscroll.sh
 | **Flatpak (3)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings |
 | **`.deb` (1)** | Nautilus Open Any Terminal (integration "Open terminal here") |
 | **GNOME Extensions (11)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, gsconnect, quick-settings-tweaks, gnome-fuzzy-app-search, rounded-window-corners |
-| **dconf** | `gnome/dconf.ini` — keybindings (Ctrl+Alt+T=Tilix, Ctrl+Alt+G=Firefox, Ctrl+Alt+N=files), Yaru-dark theme, middle-click paste disabled, appfolders, notifications, 11 extensions enabled |
+| **dconf** | `gnome/dconf.ini` — keybindings (Ctrl+Alt+T=Tilix, Ctrl+Alt+G=Firefox, Ctrl+Alt+N=files), Yaru-bark-dark theme (Yaru-dark icons), middle-click paste disabled, appfolders, notifications, 11 extensions enabled |
 | **Dotfiles** | `configs/fish/` (welcome + fastfetch), `configs/fastfetch/` (`config.jsonc` with Linux logo + custom colors) |
 | **Autoscroll** | `scripts/install-autoscroll.sh` — installs icon version (PyQt5), autostart configured. **Requires "GNOME on Xorg" session** |
 

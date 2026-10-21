@@ -2,6 +2,12 @@
 
 > Entradas no topo (mais recente primeiro). Formato: data + o que mudou + por quê + onde.
 
+## 2026-10-20 — tema Yaru-bark-dark (ícones Yaru-dark) + suíte 03
+- **Pedido do dono:** trocar todas as configs de `Yaru-dark`, exceto os ícones (que ficam `Yaru-dark`). Decisões tomadas em consulta: variante **dark** conservada → `Yaru-bark-dark`; tema do Shell (`user-theme`, era `Yaru-purple-dark`) entra na troca; `accent-color` de `purple` → `bark`; `color-scheme` `prefer-dark` mantido (os ícones hoje eram `Yaru` claro).
+- **Fix (`gnome/dconf.ini`):** `accent-color` `purple`→`bark` (L27), `gtk-theme` `Yaru-dark`→`Yaru-bark-dark` (L31), `icon-theme` `Yaru`→`Yaru-dark` (L32), `user-theme name` `Yaru-purple-dark`→`Yaru-bark-dark` (L298). Nenhum pacote novo: variantes verificadas nos debs do Debian 13 (`yaru-theme-gtk`/`-gnome-shell` 24.04.3 têm `Yaru-bark(-dark)`; `yaru-theme-icon` tem `Yaru-dark`).
+- **Suíte 03 (teste primeiro):** `tests/regressao/03-themes.sh --static` valida as 5 chaves (accent/gtk/icon/color-scheme/user-theme). Prova: 4 FAIL antes do fix × 5 PASS / 0 FAIL depois.
+- Validação: `bash -n` + `shellcheck` + suítes 01/02/03 `--static` verdes. Onde: branch `limpo-flatpak`. Pendente: dono aplica (`dconf load`) na sessão GNOME e valida o look.
+
 ## 2026-10-20 — Tilix como terminal padrão + suíte 02 (extensão Nautilus)
 - **Pedido do dono:** Tilix como terminal padrão, fish automático nele (igual ao GNOME Terminal, via shell de login) e verificação da extensão Nautilus Open Any Terminal com terminais diferentes. Decisões: GNOME Terminal **mantido** (alternativo, perfis dconf preservados); fish via shell de login (sem dconf próprio do Tilix); teste nascendo FAIL antes do fix (política bug→teste).
 - **Fix:** `pacotes.txt` + `tilix` (44→45) + `listadepacotes.txt`; `configs.sh` heredoc do `~/.config/xdg-terminals.list` → `com.gexperts.Tilix.desktop`, gsettings `com.github.stunkymonkey.nautilus-open-any-terminal terminal` → `tilix`, `nautilus -q` ao final (recarrega a extensão na sessão atual); `configs/xdg-terminals.list` × `configs/gnome-xdg-terminals.list` → Tilix; `gnome/dconf.ini` custom0 (Ctrl+Alt+T) → `command='tilix'`. Coments do GNOME Terminal como padrão atualizados.
