@@ -66,8 +66,8 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-19) **dconf do Debian 13 (Trixie) é estrito:** array vazio sem tipo (`[]` nu) é rejeitado e `dconf load` é all-or-nothing (uma chave ruim zera o restore inteiro). Dump sempre com tipos explícitos: `@as []`. Prova: log `erro` da VM (linha 150) + suíte 01 (FAIL antes, PASS depois).
 - (2026-10-19) Todo bug vira teste de regressão antes do fix (`tests/regressao/`, política em `REGRAS.md` §2).
 ### 📝 Notas de contexto
-- `main` = `07bfac8` (merge do PR #1); trabalho real em `limpo-flatpak`, sincronizada com o GitHub em 2026-10-21 — merge para `main` pendente de validação do dono + testes `--vm`.
+- `main` = versão atual (`2026-10-21`, merge de `limpo-flatpak`, autorizado pelo dono); `limpo-flatpak` segue como branch de trabalho. Testes `--vm` ainda pendentes do dono.
 - `PROJETOS.md` referenciava `rdeb/` inexistente — corrigido para `Debian-configs/`.
 - (2026-10-12) Sessão Fase 0–4 executada: docs base + P0 + fastfetch/docker/AppImage-base + P1-4 + testes. SC2086 do shellcheck são falso-positivos (word-splitting intencional).
 - (2026-10-20) Fix dconf (2026-10-19) + Tilix/extensão Nautilus commitados juntos (`514648a` em `limpo-flatpak`); merge para `main` aguarda validação do dono + testes `--vm`.
-- (2026-10-21) `limpo-flatpak` sincronizada com o GitHub (3 commits pendentes enviados); `assets/` passou a ser ignorado (imagens pessoais, não versionadas).
+- (2026-10-21) `limpo-flatpak` sincronizada com o GitHub (3 commits pendentes enviados); `assets/` passou a ser ignorado (imagens pessoais, não versionadas). `main` recebeu a versão atual via merge de `limpo-flatpak` (autorização explícita do dono).

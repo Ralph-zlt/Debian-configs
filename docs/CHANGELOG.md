@@ -7,7 +7,8 @@
 - **Sincronização:** enviados `514648a`, `26a8586` e `330ade6` para `origin/limpo-flatpak` (fix dconf, Tilix + suíte 02, tema Yaru-bark-dark + suíte 03).
 - **`assets/`:** imagens pessoais do dono (3 arquivos) passam a ser ignoradas no `.gitignore`; não versionadas.
 - **Docs:** `AGENTS.md` corrigido (estado real das branches; nota duplicada/obsoleta do `dconf.ini` removida; `assets/` registrado em "Não versionar").
-- Validação: `bash -n` + `shellcheck` + suítes 01/02/03 `--static`. Onde: `limpo-flatpak`. `main` não alterada (merge aguarda validação do dono).
+- **`main`:** autorização explícita do dono → merge de `limpo-flatpak` na `main` (merge commit, sem force/rewrite) e push; a `main` passa a conter a versão atual.
+- Validação: `bash -n` + `shellcheck` + suítes 01/02/03 `--static`. Onde: `limpo-flatpak` → `main`. Testes `--vm` seguem pendentes do dono.
 
 ## 2026-10-20 — tema Yaru-bark-dark (ícones Yaru-dark) + suíte 03
 - **Pedido do dono:** trocar todas as configs de `Yaru-dark`, exceto os ícones (que ficam `Yaru-dark`). Decisões tomadas em consulta: variante **dark** conservada → `Yaru-bark-dark`; tema do Shell (`user-theme`, era `Yaru-purple-dark`) entra na troca; `accent-color` de `purple` → `bark`; `color-scheme` `prefer-dark` mantido (os ícones hoje eram `Yaru` claro).
