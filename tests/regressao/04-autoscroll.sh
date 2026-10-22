@@ -109,6 +109,21 @@ case "$mode" in
         no "install-autoscroll.sh não valida/avisa sessão Wayland"
     fi
 
+    # --- 4b. Knobs de teste no script virgem (paridade com autoscroll.sh) ---
+    # Sem knobs não há como testar o fluxo virgem em sandbox (sem sudo/pip real).
+    for knob in AS_SKIP_APT AS_SKIP_PIP AS_CLONE_SRC; do
+        if grep -q "$knob" "$SCRIPT"; then
+            ok "install-autoscroll.sh knob $knob presente (paridade p/ sandbox)"
+        else
+            no "install-autoscroll.sh sem knob $knob — fluxo virgem não testável"
+        fi
+    done
+    if grep -q "import pynput, PyQt5" "$SCRIPT"; then
+        ok "install-autoscroll.sh com fast path do pip (idempotente no re-run)"
+    else
+        no "install-autoscroll.sh reinstalla pip cegamente (sem fast path)"
+    fi
+
     # --- 5. README documenta autoscroll como passo opcional ----------------
     if grep -q "install-autoscroll.sh" "$README" && grep -q "Opcional" "$README"; then
         ok "README documenta o autoscroll como passo opcional"

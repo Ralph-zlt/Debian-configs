@@ -25,7 +25,7 @@ passos” para “concluído”) e `docs/CHANGELOG.md` (entrada no topo) a cada 
 - `flatpak.sh` → 1º: instala Flatpak + Flathub (exige logout/login).
 - `instalar.sh` → 2º: Flatpaks (`pacotes/flatpaks.txt`), APT (`pacotes/pacotes.txt`), `.deb` (`pacotes/*.deb`), extensões (`extensoes/` → `~/.local/...`), `local/` → `~/.local/`.
 - `configs.sh` → 3º: `configs/` → `~/.config/`, `gnome/dconf.ini` via `dconf load` (garante `dconf-cli`, erro explícito, valida pós-load; **rodar dentro da sessão GNOME**), Fish padrão, XMousePasteBlock, travas middle-click.
-- `scripts/install-autoscroll.sh` → opcional Xorg **p/ máquina virgem**: clona `linux-autoscroll`, venv PyQt5, autostart.
+- `scripts/install-autoscroll.sh` → opcional Xorg **p/ máquina virgem**: clona `linux-autoscroll`, venv PyQt5, autostart. Knobs p/ teste (paridade com o aplicador local): `AS_SKIP_APT`, `AS_SKIP_PIP`, `AS_CLONE_SRC` — sandbox Caso H cobre o fluxo virgem com fantasmas semeados.
 - `autoscroll.sh` (root) → aplicador local **p/ máquina que já rodou o setup**: fast paths (dpkg/pip/clone), limpa resíduos do setup antigo, inicia o motor na sessão Xorg atual sem logout. Não mexe nas configurações do GNOME (exclusividade do `configs.sh`). Knobs p/ teste: `AS_SKIP_APT`, `AS_SKIP_PIP`, `AS_NO_LAUNCH`, `AS_CLONE_SRC`.
 - `pacotes/pacotes.txt` = lista de execução (45 pkgs); `pacotes/listadepacotes.txt` = mesma lista comentada (documentação).
 - `configs/fish/`, `configs/fastfetch/` = dotfiles (migrado do `neofetch` em 2026-10-12; original arquivado em `Bekaps/`).
@@ -63,6 +63,7 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-20) **Tema do dono: `Yaru-bark-dark`** (GTK+Shell, `accent-color='bark'`); **ícones `Yaru-dark`** (exceção intencional às demais partes de tema); `color-scheme='prefer-dark'`. Guardado pela suíte 03.
 - (2026-10-22) Padrão aprovado: aplicador local (`autoscroll.sh`) separado do fluxo virgem (`scripts/install-autoscroll.sh`) — máquina já-rodada reaproveita deps (dpkg fast path) e inicia sem logout; teste em sandbox com knobs `AS_*` (HOME redirecionado) valida o script sem tocar a máquina real. Branches: `dev` (trabalho) + `main` (estável).
 - (2026-10-22) pip PyQt5 embute o Qt mas não declara deps de sistema — sem as **libs runtime Qt5-xcb** (`libxkbcommon-x11-0`, `libxcb-cursor0`, `libxcb-xinerama0`, família xcb) o plugin `xcb` fica "found" e não inicializa: motor morre no boot (`Could not load the Qt platform plugin`). DEPS dos dois scripts cobrem agora; morte no boot nunca é engolida (cauda do log + hint, rc=1); suíte 04 testa libs (`--static`) e boot do engine (`--vm`).
+- (2026-10-22) Prova dos DOIS caminhos no sandbox (58/58): Caso **G** = réplica do estado pós-v1 do dono — re-run preserva tudo (fast path do pip pula porque `import pynput, PyQt5` passa MESMO com o crash Qt, que é uma falha do plugin na hora da aplicação, não do import); Caso **H** = script virgem com knobs. Lixo possível pós-v1: crash-log + caches pip; fantasmas já limpos pelo v1 e `rm -f` idempotente.
 ### ❌ Corrigido / Lição aprendida
 - (2026-10-12) Não propor minimalismo extremo neste projeto (intenção é export do ambiente).
 - (2026-10-19) Nunca engolir falha de comando crítico com `|| echo` — `dconf load` falhava silencioso e as configs das extensões não aplicavam na VM. Padrão: falha explícita + verificação pós-comando.
