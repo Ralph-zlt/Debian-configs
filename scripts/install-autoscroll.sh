@@ -15,7 +15,12 @@ if [ "${XDG_SESSION_TYPE:-}" = "wayland" ]; then
 fi
 
 sudo apt update
-sudo apt install -y python3-dev python3-venv xsel git libgl1 libegl1 libxkbcommon0
+# Libs runtime Qt5-xcb: o PyQt5 via pip embute o Qt mas não puxa deps de
+# sistema — sem elas o plugin "xcb" não inicializa no boot do motor.
+sudo apt install -y python3-dev python3-venv xsel git libgl1 libegl1 libxkbcommon0 \
+    libxkbcommon-x11-0 libxcb-cursor0 libxcb-xinerama0 \
+    libxcb-xkb1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
+    libxcb-render-util0 libxcb-randr0 libxcb-shape0
 
 if [ ! -d "$TARGET/.git" ]; then
   rm -rf "$TARGET"

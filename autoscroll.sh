@@ -37,7 +37,14 @@ SCRIPT="$TARGET/autoscroll.py"
 REPO="${AS_CLONE_SRC:-https://github.com/TWolczanski/linux-autoscroll.git}"
 RUNPATTERN="linux-autoscroll/autoscroll.py"
 
-DEPS=(xsel python3-dev python3-pip python3-venv git libgl1 libegl1 libxkbcommon0)
+# DEPS=(xsel python3-dev python3-pip python3-venv git) + libs runtime do Qt5-xcb
+# O PyQt5 instalado via pip EMBUTE o Qt, mas não puxa dependências de sistema —
+# sem libs abaixo o plugin "xcb" não inicializa ("Could not load the Qt platform plugin").
+DEPS=(xsel python3-dev python3-pip python3-venv git \
+      libgl1 libegl1 libxkbcommon0 \
+      libxkbcommon-x11-0 libxcb-cursor0 libxcb-xinerama0 \
+      libxcb-xkb1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
+      libxcb-render-util0 libxcb-randr0 libxcb-shape0)
 
 echo "== autoscroll local (motor + autostart + limpeza + início) =="
 echo "repo-de-origem: $BASE"
@@ -144,7 +151,11 @@ else
     if pgrep -f "$RUNPATTERN" >/dev/null 2>&1; then
         echo "[início] motor iniciado NESTA sessão (log: $TARGET/autoscroll.log) — teste segurando o botão do meio 0,5s e arrastando."
     else
-        echo "[início] processo não subiu — verifique o log: $TARGET/autoscroll.log"
+        echo "[início] processo NÃO subiu — cauda do log ($TARGET/autoscroll.log):"
+        tail -n 8 "$TARGET/autoscroll.log" 2>/dev/null || true
+        echo
+        echo "hint: 'Could not load the Qt platform plugin' = faltam as libs runtime Qt5-xcb:"
+        echo "      sudo apt install -y libxkbcommon-x11-0 libxcb-cursor0 libxcb-xinerama0"
         exit 1
     fi
 fi

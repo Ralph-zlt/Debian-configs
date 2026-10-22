@@ -166,6 +166,29 @@ case "$mode" in
         ok "autoscroll.sh não toca dconf/GNOME (config aplicada pelo configs.sh)"
     fi
 
+    # --- 7. Libs runtime Qt5-xcb (bug 2026-10-22: pip PyQt5 não puxa deps do sistema)
+    # Sintoma: "Could not load the Qt platform plugin xcb — even though it was found"
+    for arq in "$LOCALSH" "$SCRIPT"; do
+        nome=$(basename "$arq")
+        for lib in libxkbcommon-x11-0 libxcb-cursor0 libxcb-xinerama0; do
+            if grep -q "$lib" "$arq"; then
+                ok "$nome instala $lib (runtime Qt5-xcb)"
+            else
+                no "$nome NÃO instala $lib — pip PyQt5 quebra no boot (plugin xcb)"
+            fi
+        done
+    done
+    if grep -q "cauda do log" "$LOCALSH" && grep -q "tail -n" "$LOCALSH"; then
+        ok "autoscroll.sh mostra a cauda do log quando o motor não sobe"
+    else
+        no "autoscroll.sh não diagnostica morte do motor (sem cauda do log)"
+    fi
+    if grep -q "Could not load the Qt platform plugin" "$LOCALSH"; then
+        ok "autoscroll.sh dá hint das libs Qt5-xcb na falha de boot"
+    else
+        no "autoscroll.sh sem hint das libs Qt5-xcb"
+    fi
+
     echo
     if [ "$fail" -eq 0 ]; then
         echo "Suíte 04 --static: TUDO VERDE"
@@ -231,6 +254,29 @@ case "$mode" in
         ok "autoscroll rodando na sessão atual"
     else
         no "autoscroll NÃO está rodando — logout/login na sessão Xorg (ou iniciar manualmente: $VENV_PY $PY)"
+    fi
+
+    # --- 5. Engine sobe sem erro Qt (bug 2026-10-22: Qt-xcb runtime) --------
+    # Entrada: executar o motor com timeout 5s. Saída esperada:
+    #   rc=124 (timeout matou = processo VIVO) e nada de "Could not load the
+    #   Qt platform plugin" — o mesmo teste de entrada→saída do dono, rodando
+    #   dentro da sessão GNOME.
+    if command -v timeout >/dev/null 2>&1; then
+        QTLOG=$(mktemp)
+        set +e
+        timeout 5 "$VENV_PY" "$PY" >/dev/null 2>"$QTLOG"
+        rc_engine=$?
+        set -u
+        if [ "$rc_engine" = 124 ]; then
+            ok "engine vivo após 5s (rc=124=timeout) — Qt/xcb ok"
+        elif grep -q "Could not load the Qt platform plugin" "$QTLOG" 2>/dev/null; then
+            no "engine morreu no boot (Qt xcb) — correção: apt install -y libxkbcommon-x11-0 libxcb-cursor0 libxcb-xinerama0"
+        else
+            no "engine saiu antes do timeout (rc=$rc_engine) — log: $(head -2 "$QTLOG" 2>/dev/null)"
+        fi
+        rm -f "$QTLOG"
+    else
+        no "timeout ausente — não foi possível testar o boot do engine"
     fi
 
     resumo
