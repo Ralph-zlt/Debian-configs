@@ -116,6 +116,56 @@ case "$mode" in
         no "README não documenta (Opcional) o install-autoscroll.sh"
     fi
 
+    # --- 6. autoscroll.sh (local, máquina já-configurada) ------------------
+    LOCALSH="$BASE/autoscroll.sh"
+    if [ -f "$LOCALSH" ]; then
+        ok "autoscroll.sh presente no repo root (máquina já-rodada)"
+    else
+        no "autoscroll.sh ausente no root — máquina que já rodou o setup fica sem aplicador local"
+    fi
+    if [ -x "$LOCALSH" ]; then
+        ok "autoscroll.sh executável (bit de execução)"
+    else
+        no "autoscroll.sh sem bit de execução"
+    fi
+    if head -5 "$LOCALSH" | grep -q "set -e" || grep -q "^set -e" "$LOCALSH"; then
+        ok "autoscroll.sh com set -e"
+    else
+        no "autoscroll.sh sem set -e (política do repo)"
+    fi
+    for knob in AS_SKIP_APT AS_SKIP_PIP AS_NO_LAUNCH AS_CLONE_SRC; do
+        if grep -q "$knob" "$LOCALSH"; then
+            ok "autoscroll.sh knob $knob presente"
+        else
+            no "autoscroll.sh sem knob $knob (testes/variabilidade quebra)"
+        fi
+    done
+    if grep -q "dpkg -s" "$LOCALSH"; then
+        ok "autoscroll.sh verifica deps APT via dpkg (fast path, máquina já-rodada)"
+    else
+        no "autoscroll.sh roda apt cegamente (deveria checar dpkg antes)"
+    fi
+    if grep -q "import pynput, PyQt5" "$LOCALSH"; then
+        ok "autoscroll.sh fast path do pip (só instala se import faltar)"
+    else
+        no "autoscroll.sh sem fast path do pip"
+    fi
+    if grep -q "rm -f" "$LOCALSH" && grep -q "config/autostart/$FANTASMA" "$LOCALSH" && grep -q "share/applications/$FANTASMA" "$LOCALSH"; then
+        ok "autoscroll.sh limpa os resíduos fantasma (autostart + menu)"
+    else
+        no "autoscroll.sh não limpa os resíduos fantasma"
+    fi
+    if grep -q "pgrep -f" "$LOCALSH" && grep -q "nohup" "$LOCALSH"; then
+        ok "autoscroll.sh inicia na sessão atual com guarda pgrep (sem duplicar)"
+    else
+        no "autoscroll.sh sem início imediato + guarda pgrep"
+    fi
+    if grep -q "dconf" "$LOCALSH"; then
+        no "autoscroll.sh fala com dconf — dconf é exclusividade do configs.sh"
+    else
+        ok "autoscroll.sh não toca dconf/GNOME (config aplicada pelo configs.sh)"
+    fi
+
     echo
     if [ "$fail" -eq 0 ]; then
         echo "Suíte 04 --static: TUDO VERDE"

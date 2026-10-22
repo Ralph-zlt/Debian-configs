@@ -51,6 +51,14 @@ bash scripts/install-autoscroll.sh
 # 5. Pronto! Ambiente configurado.
 ```
 
+**Já rodou o setup nesta máquina e quer (re)aplicar/ativar o autoscroll sem logout?**
+
+```bash
+bash autoscroll.sh
+# → Reaproveita o ambiente (só instala o que faltar), limpa resíduos do setup
+#   antigo e inicia o motor NA sessão atual (se estiver em Xorg).
+```
+
 **O que cada script faz:**
 
 | Script | Responsabilidade | Reinício necessário? |
@@ -58,7 +66,8 @@ bash scripts/install-autoscroll.sh
 | `flatpak.sh` | Instala `flatpak`, `gnome-software-plugin-flatpak`, adiciona Flathub, `flatpak update` | **Sim** (logout/login) |
 | `instalar.sh` | Apps Flatpak (3), 45 pacotes APT, 1 `.deb`, 11 extensões GNOME, restaura `~/.local` | **Sim** (logout/login p/ extensões) |
 | `configs.sh` | dconf (GNOME), Fish como shell padrão, XMousePasteBlock, GTK middle-click block | **Sim** (reinício completo) |
-| `scripts/install-autoscroll.sh` | Autoscroll estilo Windows (ícone, Xorg apenas) | **Sim** (logout + sessão Xorg) |
+| `scripts/install-autoscroll.sh` | Autoscroll estilo Windows (ícone, Xorg apenas) — para máquina **virgem** | **Sim** (logout + sessão Xorg) |
+| `autoscroll.sh` | Autoscroll em máquina que **já rodou 1–3** (fast paths, limpa resíduos antigos, inicia na hora) | **Não** (usa a sessão Xorg atual; Wayland pede logout) |
 
 > ⚠️ **Importante**: A ordem é obrigatória. `flatpak.sh` prepara a infraestrutura que `instalar.sh` usa. `configs.sh` aplica configs que dependem dos pacotes instalados.
 
@@ -68,14 +77,14 @@ bash scripts/install-autoscroll.sh
 
 | Categoria | Detalhes |
 |-----------|----------|
-| **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh`, `scripts/install-autoscroll.sh` — idempotentes, seguros, com `set -e` |
+| **Scripts** | `instalar.sh`, `configs.sh`, `flatpak.sh`, `scripts/install-autoscroll.sh`, `autoscroll.sh` — idempotentes, seguros, com `set -e` |
 | **APT (45 pkgs)** | `pacotes/pacotes.txt` — dev tools (git, python3, distrobox+podman), firmware, fish, fastfetch, **tilix (terminal padrão)**, gnome-tweaks, dconf-editor, gparted, synaptic, temas Yaru, codecs, drivers, AppImage (libfuse2t64 + fuse3) |
 | **Flatpak (3)** | `pacotes/flatpaks.txt` — ExtensionManager, Bottles, GdmSettings |
 | **`.deb` (1)** | Nautilus Open Any Terminal (integração "Abrir terminal aqui") |
 | **Extensões GNOME (11)** | `extensoes/` + `local/share/gnome-shell/extensions/` — tilingshell, dash-to-panel, astra-monitor, arcmenu, clipboard-indicator, lockkeys, user-theme, gsconnect, quick-settings-tweaks, gnome-fuzzy-app-search, rounded-window-corners |
 | **dconf** | `gnome/dconf.ini` — keybindings (Ctrl+Alt+T=Tilix, Ctrl+Alt+G=Firefox, Ctrl+Alt+N=arquivos), tema Yaru-bark-dark (ícones Yaru-dark), middle-click paste desabilitado, appfolders, notificações, 11 extensões habilitadas |
 | **Dotfiles** | `configs/fish/` (welcome + fastfetch), `configs/fastfetch/` (`config.jsonc` com logo Linux + cores personalizadas) |
-| **Autoscroll** | `scripts/install-autoscroll.sh` — instala versão com ícone (PyQt5), autostart configurado. **Requer sessão "GNOME on Xorg"** |
+| **Autoscroll** | `scripts/install-autoscroll.sh` (virgem) × `autoscroll.sh` (máquina já-rodada, com ícone PyQt5, autostart e início sem logout). **Requer sessão "GNOME on Xorg"** |
 
 ---
 

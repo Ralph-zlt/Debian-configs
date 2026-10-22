@@ -18,14 +18,15 @@ passos” para “concluído”) e `docs/CHANGELOG.md` (entrada no topo) a cada 
 
 ## Branches (obrigatório)
 - `main` = estável, só o dono valida e mergeia. IA NUNCA pusha direto na `main` sem autorização explícita.
-- `limpo-flatpak` = branch de trabalho atual. Todo código novo vai para ela até o dono validar o merge.
+- `dev` = branch de trabalho atual (era `limpo-flatpak`, renomeada em 2026-10-22 a pedido do dono). Todo código novo vai para ela até o dono validar o merge.
 - Antes de codar: `git status -sb` + `git log --oneline -5`.
 
 ## Onde está o código
 - `flatpak.sh` → 1º: instala Flatpak + Flathub (exige logout/login).
 - `instalar.sh` → 2º: Flatpaks (`pacotes/flatpaks.txt`), APT (`pacotes/pacotes.txt`), `.deb` (`pacotes/*.deb`), extensões (`extensoes/` → `~/.local/...`), `local/` → `~/.local/`.
 - `configs.sh` → 3º: `configs/` → `~/.config/`, `gnome/dconf.ini` via `dconf load` (garante `dconf-cli`, erro explícito, valida pós-load; **rodar dentro da sessão GNOME**), Fish padrão, XMousePasteBlock, travas middle-click.
-- `scripts/install-autoscroll.sh` → opcional Xorg: clona `linux-autoscroll`, venv PyQt5, autostart.
+- `scripts/install-autoscroll.sh` → opcional Xorg **p/ máquina virgem**: clona `linux-autoscroll`, venv PyQt5, autostart.
+- `autoscroll.sh` (root) → aplicador local **p/ máquina que já rodou o setup**: fast paths (dpkg/pip/clone), limpa resíduos do setup antigo, inicia o motor na sessão Xorg atual sem logout. Não mexe nas configurações do GNOME (exclusividade do `configs.sh`). Knobs p/ teste: `AS_SKIP_APT`, `AS_SKIP_PIP`, `AS_NO_LAUNCH`, `AS_CLONE_SRC`.
 - `pacotes/pacotes.txt` = lista de execução (45 pkgs); `pacotes/listadepacotes.txt` = mesma lista comentada (documentação).
 - `configs/fish/`, `configs/fastfetch/` = dotfiles (migrado do `neofetch` em 2026-10-12; original arquivado em `Bekaps/`).
 - `extensoes/` (11) + `local/share/gnome-shell/extensions/` (9) = união intencional de 11 extensões vendored (ver Exceção abaixo). `extensoes/extensoes.txt` é o manifesto (11 UUIDs, mesma ordem pode divergir do `ls`).
@@ -43,7 +44,7 @@ passos” para “concluído”) e `docs/CHANGELOG.md` (entrada no topo) a cada 
 
 ## Validação de mudanças
 Antes de entregar:
-1. `bash -n flatpak.sh instalar.sh configs.sh scripts/install-autoscroll.sh tests/regressao/*.sh`
+1. `bash -n flatpak.sh instalar.sh configs.sh autoscroll.sh scripts/install-autoscroll.sh tests/regressao/*.sh`
 2. `shellcheck` nos scripts (instalar se ausente).
 3. Suíte de regressão: `tests/regressao/01-dconf-extensions.sh --static` e `tests/regressao/02-nautilus-any-terminal.sh --static` verdes (e `--vm` na sessão GNOME quando aplicável).
 4. Re-run idempotente: 2ª execução não pode abortar (`pkill || true`, `sed` com guarda, `apt update` presente).
@@ -60,6 +61,7 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-12) Migração `neofetch` → `fastfetch` mantendo pinguim Linux + cores `7 1 3 7 1 3`.
 - (2026-10-20) **Tilix é o terminal padrão** (xdg-terminals.list + Ctrl+Alt+T + extensão Nautilus); GNOME Terminal permanece instalado como alternativo (perfis dconf preservados). Fish abre via shell de login — sem dconf próprio do Tilix. `configs.sh` roda `nautilus -q` para recarregar a extensão do Nautilus.
 - (2026-10-20) **Tema do dono: `Yaru-bark-dark`** (GTK+Shell, `accent-color='bark'`); **ícones `Yaru-dark`** (exceção intencional às demais partes de tema); `color-scheme='prefer-dark'`. Guardado pela suíte 03.
+- (2026-10-22) Padrão aprovado: aplicador local (`autoscroll.sh`) separado do fluxo virgem (`scripts/install-autoscroll.sh`) — máquina já-rodada reaproveita deps (dpkg fast path) e inicia sem logout; teste em sandbox com knobs `AS_*` (HOME redirecionado) valida o script sem tocar a máquina real. Branches: `dev` (trabalho) + `main` (estável).
 ### ❌ Corrigido / Lição aprendida
 - (2026-10-12) Não propor minimalismo extremo neste projeto (intenção é export do ambiente).
 - (2026-10-19) Nunca engolir falha de comando crítico com `|| echo` — `dconf load` falhava silencioso e as configs das extensões não aplicavam na VM. Padrão: falha explícita + verificação pós-comando.
@@ -67,7 +69,7 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-19) Todo bug vira teste de regressão antes do fix (`tests/regressao/`, política em `REGRAS.md` §2).
 - (2026-10-22) Autoscroll: os scripts principais **nunca instalaram o motor** — apenas copiavam `.desktop`s fantasma apontando para `$HOME/linux-autoscroll` (criado apenas pelo passo opcional `scripts/install-autoscroll.sh`). "Sem autoscroll em Xorg" ≠ quebra aplicada: era autostart falhando em silêncio. XMousePasteBlock/travas de paste não impedem scroll (limpam só a seleção PRIMARY); uso exige segurar o meio ~0,5 s (`TRIGGER_DELAY=0.5`). Fix (opção escolhida do dono): fantasma removido do repo; autoscroll 100% no script opcional, que também limpa os resíduos legados — coberto pela suíte 04.
 ### 📝 Notas de contexto
-- `main` = versão atual (`2026-10-21`, merge de `limpo-flatpak`, autorizado pelo dono); `limpo-flatpak` segue como branch de trabalho. Testes `--vm` ainda pendentes do dono.
+- `main` = versão atual (`2026-10-21`, merge da versão, autorizado pelo dono); `dev` (= ex-`limpo-flatpak`, renome 2026-10-22) segue como branch de trabalho. Testes `--vm` ainda pendentes do dono.
 - `PROJETOS.md` referenciava `rdeb/` inexistente — corrigido para `Debian-configs/`.
 - (2026-10-12) Sessão Fase 0–4 executada: docs base + P0 + fastfetch/docker/AppImage-base + P1-4 + testes. SC2086 do shellcheck são falso-positivos (word-splitting intencional).
 - (2026-10-20) Fix dconf (2026-10-19) + Tilix/extensão Nautilus commitados juntos (`514648a` em `limpo-flatpak`); merge para `main` aguarda validação do dono + testes `--vm`.
