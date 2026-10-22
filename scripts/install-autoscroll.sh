@@ -48,10 +48,11 @@ X-GNOME-Autostart-enabled=true
 X-GNOME-Autostart-Delay=3
 EOF
 
-# Corrige .desktop legado do repo se existir
-if [ -f ~/.config/autostart/autoscroll.desktop ]; then
-  rm -f ~/.config/autostart/autoscroll.desktop
-fi
+# Limpa resíduos legados do repo antigo: autostart fantasma + atalho de menu
+# quebrado (configs/autostart/autoscroll.desktop e local/share/applications/
+# autoscroll.desktop foram removidos do repo em 2026-10-22 — teste de regressão 04)
+rm -f ~/.config/autostart/autoscroll.desktop
+rm -f ~/.local/share/applications/autoscroll.desktop
 
 echo "OK. Faça logout -> entre em 'GNOME on Xorg' -> segure botão-do-meio 0.5s e arraste para rolar."
 echo "Teste manual: $VENV/bin/python $SCRIPT"

@@ -65,6 +65,7 @@ Antes de alteração arriscada: copiar `Debian-configs/` para `../Bekaps/Debian-
 - (2026-10-19) Nunca engolir falha de comando crítico com `|| echo` — `dconf load` falhava silencioso e as configs das extensões não aplicavam na VM. Padrão: falha explícita + verificação pós-comando.
 - (2026-10-19) **dconf do Debian 13 (Trixie) é estrito:** array vazio sem tipo (`[]` nu) é rejeitado e `dconf load` é all-or-nothing (uma chave ruim zera o restore inteiro). Dump sempre com tipos explícitos: `@as []`. Prova: log `erro` da VM (linha 150) + suíte 01 (FAIL antes, PASS depois).
 - (2026-10-19) Todo bug vira teste de regressão antes do fix (`tests/regressao/`, política em `REGRAS.md` §2).
+- (2026-10-22) Autoscroll: os scripts principais **nunca instalaram o motor** — apenas copiavam `.desktop`s fantasma apontando para `$HOME/linux-autoscroll` (criado apenas pelo passo opcional `scripts/install-autoscroll.sh`). "Sem autoscroll em Xorg" ≠ quebra aplicada: era autostart falhando em silêncio. XMousePasteBlock/travas de paste não impedem scroll (limpam só a seleção PRIMARY); uso exige segurar o meio ~0,5 s (`TRIGGER_DELAY=0.5`). Fix (opção escolhida do dono): fantasma removido do repo; autoscroll 100% no script opcional, que também limpa os resíduos legados — coberto pela suíte 04.
 ### 📝 Notas de contexto
 - `main` = versão atual (`2026-10-21`, merge de `limpo-flatpak`, autorizado pelo dono); `limpo-flatpak` segue como branch de trabalho. Testes `--vm` ainda pendentes do dono.
 - `PROJETOS.md` referenciava `rdeb/` inexistente — corrigido para `Debian-configs/`.

@@ -177,7 +177,7 @@ echo "--> Iniciando o bloqueador..."
 pkill -f xmousepasteblock || true
 xmousepasteblock &
 # Kitty removido do setup — trava middle-click fica só no GNOME Terminal/GTK abaixo.
-echo "Sucesso! O autoscroll agora não colará mais textos e o bloqueio iniciará junto com o sistema."
+echo "Sucesso! O clique-do-meio não vai mais colar textos e o bloqueio iniciará junto com o sistema."
 # ==========================================
 # Bloqueio de Colagem no Terminal Padrão / GTK
 # ==========================================
